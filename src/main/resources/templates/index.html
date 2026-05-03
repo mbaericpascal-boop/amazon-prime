@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Amazon Prime</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(160deg, #0a1628 0%, #0d2137 40%, #0a3050 70%, #0d4a6e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        #brand {
+            font-size: 80px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #00b4d8, #48cae4, #90e0ef, #caf0f8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        #sub {
+            font-size: 22px;
+            font-weight: 300;
+            letter-spacing: 8px;
+            color: #48cae4;
+            opacity: 0;
+            margin-top: -6px;
+            transition: opacity 0.4s;
+        }
+        #arc-svg { display: block; margin: 0 auto; overflow: visible; }
+        #arc-path {
+            stroke: #f0a500;
+            stroke-width: 4;
+            stroke-linecap: round;
+            fill: none;
+            stroke-dasharray: 320;
+            stroke-dashoffset: 320;
+        }
+        #dot { fill: #f0a500; opacity: 0; }
+        .highlight #brand {
+            background: linear-gradient(90deg, #fff, #caf0f8, #fff);
+            -webkit-background-clip: text;
+            filter: brightness(1.4);
+        }
+        #nav {
+            margin-top: 60px;
+            display: flex;
+            gap: 20px;
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        #nav a {
+            padding: 12px 32px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+        #nav a:hover { transform: scale(1.05); }
+        .btn-primary {
+            background: #f0a500;
+            color: #0a1628;
+        }
+        .btn-secondary {
+            border: 1px solid #48cae4;
+            color: #48cae4;
+        }
+    </style>
+</head>
+<body>
+    <div id="logo-wrap">
+        <div id="brand">amazon</div>
+        <svg id="arc-svg" width="320" height="38" viewBox="0 0 320 38">
+            <path id="arc-path" d="M 18 8 Q 80 38 160 32 Q 240 26 302 8"/>
+            <circle id="dot" cx="302" cy="8" r="5"/>
+        </svg>
+        <div id="sub">prime video</div>
+    </div>
+
+    <div id="nav">
+        <a href="/register" class="btn-primary">Commencer</a>
+        <a href="/login" class="btn-secondary">Se connecter</a>
+    </div>
+
+    <script>
+        const brand = document.getElementById('brand');
+        const sub = document.getElementById('sub');
+        const arc = document.getElementById('arc-path');
+        const dot = document.getElementById('dot');
+        const nav = document.getElementById('nav');
+        const wrap = document.getElementById('logo-wrap');
+
+        function playSnap() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const buf = ctx.createBuffer(1, ctx.sampleRate * 0.12, ctx.sampleRate);
+                const d = buf.getChannelData(0);
+                for (let i = 0; i < d.length; i++) {
+                    const t = i / ctx.sampleRate;
+                    d[i] = (Math.random()*2-1) * Math.exp(-t*60) * (t < 0.005 ? t/0.005 : 1);
+                }
+                const src = ctx.createBufferSource();
+                src.buffer = buf;
+                const gain = ctx.createGain();
+                gain.gain.setValueAtTime(0.6, 0);
+                gain.gain.exponentialRampToValueAtTime(0.001, 0.12);
+                src.connect(gain);
+                gain.connect(ctx.destination);
+                src.start();
+            } catch(e) {}
+        }
+
+        function animate() {
+            brand.style.opacity = '1';
+            let start = null;
+            const dur = 1600;
+            function drawArc(ts) {
+                if (!start) start = ts;
+                const p = Math.min((ts - start) / dur, 1);
+                const ease = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+                arc.style.strokeDashoffset = 320 * (1 - ease);
+                if (p < 1) {
+                    requestAnimationFrame(drawArc);
+                } else {
+                    arc.style.strokeDashoffset = 0;
+                    dot.style.opacity = '1';
+                    setTimeout(() => {
+                        playSnap();
+                        sub.style.opacity = '1';
+                        nav.style.opacity = '1';
+                        document.body.classList.add('highlight');
+                        setTimeout(() => {
+                            document.body.classList.remove('highlight');
+                        }, 3000);
+                    }, 200);
+                }
+            }
+            requestAnimationFrame(drawArc);
+        }
+
+        setTimeout(animate, 600);
+    </script>
+</body>
+</html>
