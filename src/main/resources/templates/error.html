@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Erreur — CamStream</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="logo" th:href="@{/catalogue}">Cam<span>Stream</span></a>
+</div>
+
+<div style="max-width:500px; margin:5rem auto; text-align:center; padding:2rem;">
+
+    <div th:switch="${status}">
+
+        <div th:case="403">
+            <p style="font-size:5rem;">🚫</p>
+            <h1 style="color:#ce1126; font-size:2rem;">Accès refusé</h1>
+            <p style="color:#aaa; margin:1rem 0;">
+                Vous n'avez pas les droits pour accéder à cette page.
+            </p>
+        </div>
+
+        <div th:case="404">
+            <p style="font-size:5rem;">🔍</p>
+            <h1 style="color:#fcd116; font-size:2rem;">Page introuvable</h1>
+            <p style="color:#aaa; margin:1rem 0;">
+                Cette page n'existe pas ou a été déplacée.
+            </p>
+        </div>
+
+        <div th:case="*">
+            <p style="font-size:5rem;">⚠️</p>
+            <h1 style="color:#aaa; font-size:2rem;">Une erreur est survenue</h1>
+            <p style="color:#aaa; margin:1rem 0;" th:text="${status} + ' - ' + ${error}"></p>
+        </div>
+
+    </div>
+
+    <a th:href="@{/catalogue}" class="btn btn-primary" style="margin-top:1rem;">
+        Retour au catalogue
+    </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,235 @@
+2026-05-15T11:46:17.715+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.c.io.support.SpringFactoriesLoader   : Loaded [org.springframework.boot.ApplicationContextFactory] names: [org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContextFactory, org.springframework.boot.web.servlet.context.ServletWebServerApplicationContextFactory]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-05-15T11:46:17.737+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.c.io.support.SpringFactoriesLoader   : Loaded [org.springframework.boot.ApplicationContextFactory] names: [org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContextFactory, org.springframework.boot.web.servlet.context.ServletWebServerApplicationContextFactory]
+2026-05-15T11:46:17.887+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.c.a.ClassPathBeanDefinitionScanner   : JSR-250 'jakarta.annotation.ManagedBean' found and supported for component scanning
+2026-05-15T11:46:17.890+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.c.a.ClassPathBeanDefinitionScanner   : JSR-330 'jakarta.inject.Named' annotation found and supported for component scanning
+2026-05-15T11:46:17.914+01:00  INFO 6788 --- [amazon-prime] [           main] c.k.amazon_prime.AmazonPrimeApplication  : Starting AmazonPrimeApplication v0.0.1-SNAPSHOT using Java 25.0.3 with PID 6788 (C:\Users\User\Desktop\amazon-prime\target\amazon-prime-0.0.1-SNAPSHOT.jar started by User in C:\Users\User\Desktop\amazon-prime)
+2026-05-15T11:46:17.915+01:00 DEBUG 6788 --- [amazon-prime] [           main] c.k.amazon_prime.AmazonPrimeApplication  : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-05-15T11:46:17.916+01:00  INFO 6788 --- [amazon-prime] [           main] c.k.amazon_prime.AmazonPrimeApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-05-15T11:46:17.919+01:00 DEBUG 6788 --- [amazon-prime] [           main] o.s.boot.SpringApplication               : Loading source class com.keyce.amazon_prime.AmazonPrimeApplication
+2026-05-15T11:46:17.946+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.c.a.ClassPathBeanDefinitionScanner   : JSR-250 'jakarta.annotation.ManagedBean' found and supported for component scanning
+2026-05-15T11:46:17.946+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.c.a.ClassPathBeanDefinitionScanner   : JSR-330 'jakarta.inject.Named' annotation found and supported for component scanning
+2026-05-15T11:46:18.049+01:00 TRACE 6788 --- [amazon-prime] [           main] uePropertySourceEnvironmentPostProcessor : RandomValuePropertySource add to Environment
+2026-05-15T11:46:18.050+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.ConfigDataEnvironmentPostProcessor : Post-processing environment to add config data
+2026-05-15T11:46:18.051+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Building config data environment contributors
+2026-05-15T11:46:18.051+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Creating wrapped config data contributor for 'configurationProperties'
+2026-05-15T11:46:18.051+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Creating wrapped config data contributor for 'commandLineArgs'
+2026-05-15T11:46:18.053+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Creating wrapped config data contributor for 'servletConfigInitParams'
+2026-05-15T11:46:18.054+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Creating wrapped config data contributor for 'servletContextInitParams'
+2026-05-15T11:46:18.054+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Creating wrapped config data contributor for 'systemProperties'
+2026-05-15T11:46:18.055+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Creating wrapped config data contributor for 'systemEnvironment'
+2026-05-15T11:46:18.055+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Creating wrapped config data contributor for 'random'
+2026-05-15T11:46:18.056+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Adding initial config data import from location 'optional:file:./;optional:file:./config/;optional:file:./config/*/'
+2026-05-15T11:46:18.057+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Adding initial config data import from location 'optional:classpath:/;optional:classpath:/config/'
+2026-05-15T11:46:18.058+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Processing initial config data environment contributors without activation context
+2026-05-15T11:46:18.059+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Processing imports for phase BEFORE_PROFILE_ACTIVATION. no activation context
+2026-05-15T11:46:18.060+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Processing imports [optional:file:./;optional:file:./config/;optional:file:./config/*/]
+2026-05-15T11:46:18.060+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application.yaml
+2026-05-15T11:46:18.061+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application.yml
+2026-05-15T11:46:18.061+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application.xml
+2026-05-15T11:46:18.062+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application.properties
+2026-05-15T11:46:18.062+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application.yaml
+2026-05-15T11:46:18.063+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application.yml
+2026-05-15T11:46:18.063+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application.xml
+2026-05-15T11:46:18.064+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application.properties
+2026-05-15T11:46:18.065+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataImporter  : Considering resource file [.] from location optional:file:./;optional:file:./config/;optional:file:./config/*/
+2026-05-15T11:46:18.067+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataLoaders   : Loading file [.] using loader org.springframework.boot.context.config.StandardConfigDataLoader
+2026-05-15T11:46:18.067+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataImporter  : Loaded resource file [.] from location optional:file:./;optional:file:./config/;optional:file:./config/*/
+2026-05-15T11:46:18.074+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Imported 1 resource [file [.]]
+2026-05-15T11:46:18.074+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Processing imports [optional:classpath:/;optional:classpath:/config/]
+2026-05-15T11:46:18.075+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/application.yaml
+2026-05-15T11:46:18.076+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/application.yml
+2026-05-15T11:46:18.076+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/application.xml
+2026-05-15T11:46:18.077+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application.yaml
+2026-05-15T11:46:18.077+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application.yml
+2026-05-15T11:46:18.077+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application.xml
+2026-05-15T11:46:18.078+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application.properties
+2026-05-15T11:46:18.078+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataImporter  : Considering resource class path resource [application.properties] from location optional:classpath:/;optional:classpath:/config/
+2026-05-15T11:46:18.079+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataLoaders   : Loading class path resource [application.properties] using loader org.springframework.boot.context.config.StandardConfigDataLoader
+2026-05-15T11:46:18.079+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataImporter  : Loaded resource class path resource [application.properties] from location optional:classpath:/;optional:classpath:/config/
+2026-05-15T11:46:18.080+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Imported 1 resource [class path resource [application.properties]]
+2026-05-15T11:46:18.112+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Processed imports for of 2 contributors
+2026-05-15T11:46:18.114+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Creating config data activation context from initial contributions
+2026-05-15T11:46:18.114+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Processing config data environment contributors with initial activation context
+2026-05-15T11:46:18.139+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Processing imports for phase BEFORE_PROFILE_ACTIVATION. [ConfigDataActivationContext@3af0a9da cloudPlatform = [null], profiles = [null]]
+2026-05-15T11:46:18.140+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Processed imports for of 0 contributors
+2026-05-15T11:46:18.140+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Deducing profiles from current config data environment contributors
+2026-05-15T11:46:18.140+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Processing config data environment contributors with profile activation context
+2026-05-15T11:46:18.141+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Processing imports for phase AFTER_PROFILE_ACTIVATION. [ConfigDataActivationContext@43b9fd5 cloudPlatform = [null], profiles = [Profiles@79dc5318 active = '[]', default = '[default]', accepted = '[default]']]
+2026-05-15T11:46:18.141+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Processing imports [optional:file:./;optional:file:./config/;optional:file:./config/*/]
+2026-05-15T11:46:18.142+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application.yaml
+2026-05-15T11:46:18.142+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application.yml
+2026-05-15T11:46:18.142+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application.xml
+2026-05-15T11:46:18.142+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application.properties
+2026-05-15T11:46:18.143+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application.yaml
+2026-05-15T11:46:18.143+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application.yml
+2026-05-15T11:46:18.143+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application.xml
+2026-05-15T11:46:18.143+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application.properties
+2026-05-15T11:46:18.144+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application-default.yaml
+2026-05-15T11:46:18.144+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application-default.yml
+2026-05-15T11:46:18.144+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application-default.xml
+2026-05-15T11:46:18.144+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./application-default.properties
+2026-05-15T11:46:18.145+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application-default.yaml
+2026-05-15T11:46:18.145+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application-default.yml
+2026-05-15T11:46:18.145+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application-default.xml
+2026-05-15T11:46:18.145+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource file:./config/application-default.properties
+2026-05-15T11:46:18.145+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataImporter  : Considering resource file [.] from location optional:file:./;optional:file:./config/;optional:file:./config/*/
+2026-05-15T11:46:18.145+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataImporter  : Already loaded resource file [.] ignoring location optional:file:./;optional:file:./config/;optional:file:./config/*/
+2026-05-15T11:46:18.145+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataImporter  : Considering resource file [.] from location optional:file:./;optional:file:./config/;optional:file:./config/*/
+2026-05-15T11:46:18.147+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataImporter  : Already loaded resource file [.] ignoring location optional:file:./;optional:file:./config/;optional:file:./config/*/
+2026-05-15T11:46:18.147+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Nothing imported
+2026-05-15T11:46:18.148+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Processing imports [optional:classpath:/;optional:classpath:/config/]
+2026-05-15T11:46:18.148+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/application.yaml
+2026-05-15T11:46:18.148+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/application.yml
+2026-05-15T11:46:18.149+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/application.xml
+2026-05-15T11:46:18.149+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application.yaml
+2026-05-15T11:46:18.150+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application.yml
+2026-05-15T11:46:18.150+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application.xml
+2026-05-15T11:46:18.150+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application.properties
+2026-05-15T11:46:18.150+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/application-default.yaml
+2026-05-15T11:46:18.151+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/application-default.yml
+2026-05-15T11:46:18.151+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/application-default.xml
+2026-05-15T11:46:18.151+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/application-default.properties
+2026-05-15T11:46:18.151+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application-default.yaml
+2026-05-15T11:46:18.152+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application-default.yml
+2026-05-15T11:46:18.152+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application-default.xml
+2026-05-15T11:46:18.152+01:00 TRACE 6788 --- [amazon-prime] [           main] b.c.c.StandardConfigDataLocationResolver : Skipping missing resource classpath:/config/application-default.properties
+2026-05-15T11:46:18.152+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataImporter  : Considering resource class path resource [application.properties] from location optional:classpath:/;optional:classpath:/config/
+2026-05-15T11:46:18.153+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.context.config.ConfigDataImporter  : Already loaded resource class path resource [application.properties] ignoring location optional:classpath:/;optional:classpath:/config/
+2026-05-15T11:46:18.153+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Nothing imported
+2026-05-15T11:46:18.154+01:00 TRACE 6788 --- [amazon-prime] [           main] .b.c.c.ConfigDataEnvironmentContributors : Processed imports for of 2 contributors
+2026-05-15T11:46:18.154+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Applying config data environment contributions
+2026-05-15T11:46:18.155+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Adding imported property source 'Config resource 'class path resource [application.properties]' via location 'optional:classpath:/''
+2026-05-15T11:46:18.155+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Setting default profiles: [default]
+2026-05-15T11:46:18.155+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.c.config.ConfigDataEnvironment     : Setting active profiles: []
+2026-05-15T11:46:18.192+01:00 TRACE 6788 --- [amazon-prime] [           main] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5038d0b5, started on Fri May 15 11:46:18 WAT 2026
+2026-05-15T11:46:18.293+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Registering scope 'request' with implementation [org.springframework.web.context.request.RequestScope@5c2375a9]
+2026-05-15T11:46:18.294+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Registering scope 'session' with implementation [org.springframework.web.context.request.SessionScope@3d9c13b5]
+2026-05-15T11:46:18.342+01:00 DEBUG 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating shared instance of singleton bean 'org.springframework.context.annotation.internalConfigurationAnnotationProcessor'
+2026-05-15T11:46:18.343+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating instance of bean 'org.springframework.context.annotation.internalConfigurationAnnotationProcessor'
+2026-05-15T11:46:18.394+01:00 DEBUG 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory'
+2026-05-15T11:46:18.394+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating instance of bean 'org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory'
+2026-05-15T11:46:18.400+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Finished creating instance of bean 'org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory'
+2026-05-15T11:46:18.408+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.c.io.support.SpringFactoriesLoader   : Loaded [org.springframework.beans.BeanInfoFactory] names: [org.springframework.data.util.KotlinBeanInfoFactory]
+2026-05-15T11:46:18.413+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Getting BeanInfo for class [org.springframework.context.annotation.ConfigurationClassPostProcessor]
+2026-05-15T11:46:18.424+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Caching PropertyDescriptors for class [org.springframework.context.annotation.ConfigurationClassPostProcessor]
+2026-05-15T11:46:18.425+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'applicationStartup' of type [org.springframework.core.metrics.ApplicationStartup]
+2026-05-15T11:46:18.427+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'beanClassLoader' of type [java.lang.ClassLoader]
+2026-05-15T11:46:18.427+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'beanExcludedFromAotProcessing' of type [boolean]
+2026-05-15T11:46:18.429+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'beanNameGenerator' of type [org.springframework.beans.factory.support.BeanNameGenerator]
+2026-05-15T11:46:18.430+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'class' of type [java.lang.Class]
+2026-05-15T11:46:18.430+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'environment' of type [org.springframework.core.env.Environment]
+2026-05-15T11:46:18.431+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'metadataReaderFactory' of type [org.springframework.core.type.classreading.MetadataReaderFactory]
+2026-05-15T11:46:18.431+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'order' of type [int]
+2026-05-15T11:46:18.431+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'problemReporter' of type [org.springframework.beans.factory.parsing.ProblemReporter]
+2026-05-15T11:46:18.431+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'resourceLoader' of type [org.springframework.core.io.ResourceLoader]
+2026-05-15T11:46:18.432+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.beans.CachedIntrospectionResults     : Found bean property 'sourceExtractor' of type [org.springframework.beans.factory.parsing.SourceExtractor]
+2026-05-15T11:46:18.445+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Finished creating instance of bean 'org.springframework.context.annotation.internalConfigurationAnnotationProcessor'
+2026-05-15T11:46:18.529+01:00 DEBUG 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerProcessor'
+2026-05-15T11:46:18.529+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating instance of bean 'org.springframework.context.event.internalEventListenerProcessor'
+2026-05-15T11:46:18.544+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Finished creating instance of bean 'org.springframework.context.event.internalEventListenerProcessor'
+2026-05-15T11:46:18.545+01:00 DEBUG 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerFactory'
+2026-05-15T11:46:18.545+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating instance of bean 'org.springframework.context.event.internalEventListenerFactory'
+2026-05-15T11:46:18.546+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Finished creating instance of bean 'org.springframework.context.event.internalEventListenerFactory'
+2026-05-15T11:46:18.550+01:00 DEBUG 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating shared instance of singleton bean 'org.springframework.context.annotation.internalAutowiredAnnotationProcessor'
+2026-05-15T11:46:18.550+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating instance of bean 'org.springframework.context.annotation.internalAutowiredAnnotationProcessor'
+2026-05-15T11:46:18.559+01:00 TRACE 6788 --- [amazon-prime] [           main] f.a.AutowiredAnnotationBeanPostProcessor : 'jakarta.inject.Inject' annotation found and supported for autowiring
+2026-05-15T11:46:18.580+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Finished creating instance of bean 'org.springframework.context.annotation.internalAutowiredAnnotationProcessor'
+2026-05-15T11:46:18.580+01:00 DEBUG 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating shared instance of singleton bean 'org.springframework.context.annotation.internalCommonAnnotationProcessor'
+2026-05-15T11:46:18.580+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating instance of bean 'org.springframework.context.annotation.internalCommonAnnotationProcessor'
+2026-05-15T11:46:18.621+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Finished creating instance of bean 'org.springframework.context.annotation.internalCommonAnnotationProcessor'
+2026-05-15T11:46:18.622+01:00 DEBUG 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating shared instance of singleton bean 'org.springframework.context.annotation.internalPersistenceAnnotationProcessor'
+2026-05-15T11:46:18.622+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Creating instance of bean 'org.springframework.context.annotation.internalPersistenceAnnotationProcessor'
+2026-05-15T11:46:18.623+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Finished creating instance of bean 'org.springframework.context.annotation.internalPersistenceAnnotationProcessor'
+2026-05-15T11:46:18.628+01:00 TRACE 6788 --- [amazon-prime] [           main] ConfigServletWebServerApplicationContext : No 'messageSource' bean, using [Empty MessageSource]
+2026-05-15T11:46:18.629+01:00 TRACE 6788 --- [amazon-prime] [           main] ConfigServletWebServerApplicationContext : No 'applicationEventMulticaster' bean, using [SimpleApplicationEventMulticaster]
+2026-05-15T11:46:18.642+01:00 DEBUG 6788 --- [amazon-prime] [           main] o.s.u.c.s.UiApplicationContextUtils      : Unable to locate ThemeSource with name 'themeSource': using default [org.springframework.ui.context.support.ResourceBundleThemeSource@71454b9d]
+2026-05-15T11:46:18.644+01:00  WARN 6788 --- [amazon-prime] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2026-05-15T11:46:18.645+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@ab7395e: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.event.internalEventListenerProcessor,org.springframework.context.event.internalEventListenerFactory,amazonPrimeApplication,org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory]; root of factory hierarchy
+2026-05-15T11:46:18.645+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.b.f.s.DefaultListableBeanFactory     : Retrieved dependent beans for bean 'org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory': [org.springframework.context.annotation.internalConfigurationAnnotationProcessor]
+2026-05-15T11:46:18.992+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.c.io.support.SpringFactoriesLoader   : Loaded [org.springframework.boot.SpringBootExceptionReporter] names: [org.springframework.boot.diagnostics.FailureAnalyzers]
+2026-05-15T11:46:18.994+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.c.io.support.SpringFactoriesLoader   : Loaded [org.springframework.boot.diagnostics.FailureAnalyzer] names: [org.springframework.boot.context.config.ConfigDataNotFoundFailureAnalyzer, org.springframework.boot.context.properties.IncompatibleConfigurationFailureAnalyzer, org.springframework.boot.context.properties.NotConstructorBoundInjectionFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.BeanCurrentlyInCreationFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.BeanDefinitionOverrideFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.BeanNotOfRequiredTypeFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.BindFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.BindValidationFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.UnboundConfigurationPropertyFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.MissingParameterNamesFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.MutuallyExclusiveConfigurationPropertiesFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.NoSuchMethodFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.NoUniqueBeanDefinitionFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.PortInUseFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.ValidationExceptionFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.InvalidConfigurationPropertyNameFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.InvalidConfigurationPropertyValueFailureAnalyzer, org.springframework.boot.diagnostics.analyzer.PatternParseFailureAnalyzer, org.springframework.boot.liquibase.LiquibaseChangelogMissingFailureAnalyzer, org.springframework.boot.web.context.MissingWebServerFactoryBeanFailureAnalyzer, org.springframework.boot.web.embedded.tomcat.ConnectorStartFailureAnalyzer, org.springframework.boot.autoconfigure.data.redis.RedisUrlSyntaxFailureAnalyzer, org.springframework.boot.autoconfigure.diagnostics.analyzer.NoSuchBeanDefinitionFailureAnalyzer, org.springframework.boot.autoconfigure.jdbc.DataSourceBeanCreationFailureAnalyzer, org.springframework.boot.autoconfigure.jdbc.HikariDriverConfigurationFailureAnalyzer, org.springframework.boot.autoconfigure.jooq.NoDslContextBeanFailureAnalyzer, org.springframework.boot.autoconfigure.r2dbc.ConnectionFactoryBeanCreationFailureAnalyzer, org.springframework.boot.autoconfigure.r2dbc.MissingR2dbcPoolDependencyFailureAnalyzer, org.springframework.boot.autoconfigure.r2dbc.MultipleConnectionPoolConfigurationsFailureAnalyzer, org.springframework.boot.autoconfigure.r2dbc.NoConnectionFactoryBeanFailureAnalyzer]
+2026-05-15T11:46:19.012+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.boot.diagnostics.FailureAnalyzers    : Unable to instantiate factory class [org.springframework.boot.liquibase.LiquibaseChangelogMissingFailureAnalyzer] for factory type [org.springframework.boot.diagnostics.FailureAnalyzer]
+
+java.lang.NoClassDefFoundError: liquibase/exception/ChangeLogParseException
+	at java.base/java.lang.Class.getDeclaredConstructors0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredConstructors(Class.java:2985) ~[na:na]
+	at java.base/java.lang.Class.getConstructors(Class.java:2025) ~[na:na]
+	at org.springframework.core.io.support.SpringFactoriesLoader$FactoryInstantiator.findConstructor(SpringFactoriesLoader.java:405) ~[spring-core-6.1.6.jar!/:6.1.6]
+	at org.springframework.core.io.support.SpringFactoriesLoader$FactoryInstantiator.forClass(SpringFactoriesLoader.java:394) ~[spring-core-6.1.6.jar!/:6.1.6]
+	at org.springframework.core.io.support.SpringFactoriesLoader.instantiateFactory(SpringFactoriesLoader.java:227) ~[spring-core-6.1.6.jar!/:6.1.6]
+	at org.springframework.core.io.support.SpringFactoriesLoader.load(SpringFactoriesLoader.java:206) ~[spring-core-6.1.6.jar!/:6.1.6]
+	at org.springframework.boot.diagnostics.FailureAnalyzers.loadFailureAnalyzers(FailureAnalyzers.java:69) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.diagnostics.FailureAnalyzers.<init>(FailureAnalyzers.java:64) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.diagnostics.FailureAnalyzers.<init>(FailureAnalyzers.java:58) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[na:na]
+	at org.springframework.core.io.support.SpringFactoriesLoader$FactoryInstantiator.instantiate(SpringFactoriesLoader.java:382) ~[spring-core-6.1.6.jar!/:6.1.6]
+	at org.springframework.core.io.support.SpringFactoriesLoader.instantiateFactory(SpringFactoriesLoader.java:228) ~[spring-core-6.1.6.jar!/:6.1.6]
+	at org.springframework.core.io.support.SpringFactoriesLoader.load(SpringFactoriesLoader.java:206) ~[spring-core-6.1.6.jar!/:6.1.6]
+	at org.springframework.core.io.support.SpringFactoriesLoader.load(SpringFactoriesLoader.java:160) ~[spring-core-6.1.6.jar!/:6.1.6]
+	at org.springframework.boot.SpringApplication.getSpringFactoriesInstances(SpringApplication.java:483) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.SpringApplication.getExceptionReporters(SpringApplication.java:831) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:814) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:344) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at com.keyce.amazon_prime.AmazonPrimeApplication.main(AmazonPrimeApplication.java:9) ~[!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:91) ~[amazon-prime-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:53) ~[amazon-prime-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:58) ~[amazon-prime-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Caused by: java.lang.ClassNotFoundException: liquibase.exception.ChangeLogParseException
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:377) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:557) ~[na:na]
+	at org.springframework.boot.loader.net.protocol.jar.JarUrlClassLoader.loadClass(JarUrlClassLoader.java:104) ~[amazon-prime-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.LaunchedClassLoader.loadClass(LaunchedClassLoader.java:91) ~[amazon-prime-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490) ~[na:na]
+	... 29 common frames omitted
+
+2026-05-15T11:46:19.033+01:00 TRACE 6788 --- [amazon-prime] [           main] o.s.c.io.support.SpringFactoriesLoader   : Loaded [org.springframework.boot.diagnostics.FailureAnalysisReporter] names: [org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter]
+2026-05-15T11:46:19.034+01:00 DEBUG 6788 --- [amazon-prime] [           main] o.s.b.d.LoggingFailureAnalysisReporter   : Application failed to start due to an exception
+
+org.springframework.boot.web.context.MissingWebServerFactoryBeanException: No qualifying bean of type 'org.springframework.boot.web.servlet.server.ServletWebServerFactory' available: Unable to start AnnotationConfigServletWebServerApplicationContext due to missing ServletWebServerFactory bean
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getWebServerFactory(ServletWebServerApplicationContext.java:216) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:186) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:618) ~[spring-context-6.1.6.jar!/:6.1.6]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.5.jar!/:3.2.5]
+	at com.keyce.amazon_prime.AmazonPrimeApplication.main(AmazonPrimeApplication.java:9) ~[!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:91) ~[amazon-prime-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:53) ~[amazon-prime-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:58) ~[amazon-prime-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+
+2026-05-15T11:46:19.035+01:00 ERROR 6788 --- [amazon-prime] [           main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web application could not be started as there was no org.springframework.boot.web.servlet.server.ServletWebServerFactory bean defined in the context.
+
+Action:
+
+Check your application's dependencies for a supported servlet web server.
+Check the configured web application type.
+
