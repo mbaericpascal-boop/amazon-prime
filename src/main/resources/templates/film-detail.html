@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${film.titre} + ' - CamStream'">Film - CamStream</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/catalogue}">Cam<span>Stream</span></a>
+    <div class="navbar-links">
+        <a th:href="@{/catalogue}">← Retour au catalogue</a>
+        <form th:action="@{/logout}" method="post" style="display:inline">
+            <button type="submit" class="btn-logout">Déconnexion</button>
+        </form>
+    </div>
+</nav>
+
+<div class="film-detail">
+    <div class="film-detail-header">
+        <div class="film-detail-poster">
+            <span th:text="${film.genre == 'Action'} ? '💥' :
+                           (${film.genre == 'Drame'} ? '🎭' :
+                           (${film.genre == 'Comédie'} ? '😂' :
+                           (${film.genre == 'Romance'} ? '❤️' : '🎬')))">🎬</span>
+        </div>
+        <div class="film-detail-info">
+            <h1 th:text="${film.titre}">Titre du film</h1>
+            <p>
+                <span class="badge"
+                      th:classappend="${film.abonnementRequis == 'PREMIUM'} ? 'badge-premium' :
+                                     (${film.abonnementRequis == 'STANDARD'} ? 'badge-standard' : 'badge-basic')"
+                      th:text="${film.abonnementRequis}"></span>
+            </p>
+            <p style="margin-top:12px;">
+                🎭 <span th:text="${film.genre}">Genre</span> &nbsp;|&nbsp;
+                📅 <span th:text="${film.annee}">2024</span>
+            </p>
+            <p style="margin-top:15px; line-height:1.7;" th:text="${film.description}">Description...</p>
+
+            <!-- Accès autorisé -->
+            <a th:if="${acces}" href="#" class="play-btn">
+                ▶ Regarder maintenant
+            </a>
+
+            <!-- Accès bloqué -->
+            <div th:unless="${acces}" class="acces-bloque">
+                <p style="font-size:1.1rem; margin-bottom:10px;">🔒 Contenu réservé <strong th:text="${film.abonnementRequis}"></strong></p>
+                <p style="color:#999; margin-bottom:15px;">
+                    Votre abonnement actuel (<strong th:text="${abonnement}"></strong>) ne donne pas accès à ce film.
+                </p>
+                <a th:href="@{/profil}" class="btn btn-primary">Améliorer mon abonnement</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

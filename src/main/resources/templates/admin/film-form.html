@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Film — Admin CamStream</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="logo" th:href="@{/admin/dashboard}">Cam<span>Stream</span> Admin</a>
+    <nav>
+        <a th:href="@{/admin/dashboard}">← Retour au dashboard</a>
+    </nav>
+</div>
+
+<div style="max-width:500px; margin:2rem auto; padding:0 1rem;">
+    <div class="auth-container" style="max-width:100%; margin:0;">
+        <h2 th:text="${film.id != null} ? 'Modifier le film' : 'Ajouter un film'">Film</h2>
+
+        <form th:action="${film.id != null}
+                ? @{/admin/films/modifier/{id}(id=${film.id})}
+                : @{/admin/films/nouveau}"
+              th:object="${film}" method="post">
+
+            <div class="form-group">
+                <label>Titre</label>
+                <input type="text" th:field="*{titre}" placeholder="Ex: Mboa" required/>
+            </div>
+            <div class="form-group">
+                <label>Genre</label>
+                <select th:field="*{genre}">
+                    <option value="Action">Action</option>
+                    <option value="Drame">Drame</option>
+                    <option value="Comédie">Comédie</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Aventure">Aventure</option>
+                    <option value="Documentaire">Documentaire</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Année</label>
+                <input type="number" th:field="*{annee}" min="1900" max="2030" placeholder="2024" required/>
+            </div>
+            <div class="form-group">
+                <label>Abonnement requis</label>
+                <select th:field="*{abonnementRequis}">
+                    <option value="BASIC">BASIC — Accessible à tous</option>
+                    <option value="STANDARD">STANDARD — Moyen et haut</option>
+                    <option value="PREMIUM">PREMIUM — Exclusif</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" th:field="*{description}" placeholder="Résumé du film..."/>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;">
+                <span th:text="${film.id != null} ? 'Enregistrer les modifications' : 'Ajouter le film'">Valider</span>
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
