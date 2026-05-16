@@ -18,13 +18,11 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
-    // Encodeur de mot de passe BCrypt (standard sécurisé)
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Relie notre service de login à l'encodeur
     @Bean
     public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -33,29 +31,28 @@ public class SecurityConfig {
         return provider;
     }
 
-    // Règles d'accès aux pages
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authenticationProvider(authProvider())
             .authorizeHttpRequests(auth -> auth
 
-                // Pages publiques (accessibles sans connexion)
-                .requestMatchers("/", "/login", "/register", "/css/**", "/js/**", "/images/**").permitAll()
+                // Pages publiques, ressources statiques et parcours de paiement autorisés sans session
+                .requestMatchers("/", "/login", "/register", "/payment/**", "/css/**", "/js/**", "/images/**", "/videos/**", "/video/**").permitAll()
 
-                // Pages réservées aux admins
+                // Pages réservées à l'administration
                 .requestMatchers("/admin/**").hasRole("ADMIN")
 
-                // Toutes les autres pages nécessitent d'être connecté
+                // Tout le reste (Le catalogue, les profils...) nécessite une connexion active et validée
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login")             // Notre page de login personnalisée
-                .loginProcessingUrl("/login")    // URL qui traite le formulaire
-                .usernameParameter("email")      // On utilise l'email comme identifiant
+                .loginPage("/login")             
+                .loginProcessingUrl("/login")    
+                .usernameParameter("email")      
                 .passwordParameter("motDePasse")
-                .defaultSuccessUrl("/catalogue", true)  // Redirection après login réussi
-                .failureUrl("/login?erreur=true")        // Redirection si échec
+                .defaultSuccessUrl("/catalogue", true)  
+                .failureUrl("/login?erreur=true")        
                 .permitAll()
             )
             .logout(logout -> logout
@@ -65,9 +62,9 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .permitAll()
             )
-            // Autoriser la console H2 (base de données en dev)
+            // Désactivation CSRF ciblée pour l'usage fluide de la console de développement H2
             .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/h2-console/**")
+                .ignoringRequestMatchers("/h2-console/**", "/payment/**")
             )
             .headers(headers -> headers
                 .frameOptions(frame -> frame.sameOrigin())

@@ -22,7 +22,7 @@ public class DataInitService implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        // --- Admin par défaut ---
+        // --- Administrateur ---
         if (!adminRepository.existsByEmail("admin@keyce.cm")) {
             Admin admin = new Admin();
             admin.setNom("Administrateur KEYCE");
@@ -32,7 +32,7 @@ public class DataInitService implements CommandLineRunner {
             adminRepository.save(admin);
         }
 
-        // --- Users de démo (contexte camerounais) ---
+        // --- Utilisateur de démo ---
         if (!userRepository.existsByEmail("jean@gmail.com")) {
             User u1 = new User();
             u1.setNom("Jean Mbarga");
@@ -41,53 +41,41 @@ public class DataInitService implements CommandLineRunner {
             u1.setTypeAbonnement("BASIC");
             userRepository.save(u1);
         }
-        if (!userRepository.existsByEmail("fatima@gmail.com")) {
-            User u2 = new User();
-            u2.setNom("Fatima Ngassa");
-            u2.setEmail("fatima@gmail.com");
-            u2.setMotDePasse(passwordEncoder.encode("password123"));
-            u2.setTypeAbonnement("STANDARD");
-            userRepository.save(u2);
-        }
-        if (!userRepository.existsByEmail("paul@gmail.com")) {
-            User u3 = new User();
-            u3.setNom("Paul Tchamba");
-            u3.setEmail("paul@gmail.com");
-            u3.setMotDePasse(passwordEncoder.encode("password123"));
-            u3.setTypeAbonnement("PREMIUM");
-            userRepository.save(u3);
-        }
 
-        // --- Films de démo ---
-        if (filmRepository.count() == 0) {
-            // Films africains / contexte local
-            creerFilm("Mboa", "Drame", 2022, "BASIC",
-                "Une histoire poignante sur la vie à Douala, entre tradition et modernité.");
-            creerFilm("Le Retour au Village", "Comédie", 2021, "BASIC",
-                "Un jeune de Yaoundé rentre au village pour les fêtes — et tout s'enchaîne !");
-            creerFilm("Nollywood Nights", "Romance", 2023, "STANDARD",
-                "Une co-production Cameroun-Nigeria sur un amour impossible entre deux familles rivales.");
-            creerFilm("Black Panther", "Action", 2018, "STANDARD",
-                "Le roi du Wakanda défend son royaume face à un ennemi venu de loin.");
-            creerFilm("Wakanda Forever", "Action", 2022, "PREMIUM",
-                "Le Wakanda fait face à une nouvelle menace après la disparition de son roi.");
-            creerFilm("La Pirogue", "Aventure", 2012, "BASIC",
-                "Des pêcheurs sénégalais risquent leur vie pour rejoindre l'Europe.");
-            creerFilm("Timbuktu", "Drame", 2014, "STANDARD",
-                "Un berger résiste aux djihadistes qui ont pris possession de Tombouctou.");
-            creerFilm("Night of the Kings", "Drame", 2020, "PREMIUM",
-                "Dans une prison ivoirienne, un jeune détenu doit raconter des histoires toute la nuit.");
-        }
+        // FORCE LE NETTOYAGE POUR PRENDRE EN COMPTE LES 13 FILMS
+        filmRepository.deleteAll(); 
+        
+        // --- Insertion des 13 vrais films ---
+        // Catégorie 1 : Films populaires au Cameroun
+        creerFilm("Mboa", "Drame", 2022, "BASIC", "Une histoire poignante sur la vie à Douala, entre tradition et modernité.", "/images/Mboa.png");
+        creerFilm("Bataille des chéries", "Drame", 2023, "STANDARD", "Intrigues, pouvoir et trahisons au cœur d'une rivalité amoureuse intense.", "/images/Bataille des chéries .png");
+        creerFilm("La patrie d'abord", "Action", 2019, "STANDARD", "Un hommage plein d'action aux forces de défense engagées pour la paix.", "/images/La patrie d'abord.png");
+        creerFilm("Le Retour au Village", "Comédie", 2021, "BASIC", "Un jeune diplômé quitte la ville pour redécouvrir ses racines de manière hilarante.", "/images/Le Retour au Village.png");
+        creerFilm("Le Juste", "Action / Thriller", 2023, "PREMIUM", "Un homme intègre se dresse seul contre la corruption dans son quartier.", "/images/Le juste.png");
+        creerFilm("Waka", "Drame", 2014, "BASIC", "Le parcours courageux d'une femme bien décidée à s'en sortir face aux épreuves.", "/images/Waka.png");
+
+        // Catégorie 2 : Séries Cultes
+        creerFilm("Le journal de Jennifa", "Comédie", 2022, "BASIC", "Les mésaventures délirantes d'une jeune fille pleine d'ambition.", "/images/Le journal de Jennifa.png");
+        creerFilm("Pakgne", "Comédie", 2020, "BASIC", "Retrouvez les commérages et les sketchs cultes du duo incontournable.", "/images/Pakgne.png");
+        creerFilm("L'accord", "Drame", 2022, "STANDARD", "Quand les secrets de famille et les pactes silencieux refont surface.", "/images/L'accord.png");
+        creerFilm("Maideut", "Comédie Dramatique", 2021, "BASIC", "Intrigues amoureuses et quiproquos au sein de la bourgeoisie locale.", "/images/Maideut.png");
+        creerFilm("The Plan", "Thriller", 2023, "PREMIUM", "Un braquage à haut risque où les trahisons s'enchaînent plus vite que prévu.", "/images/The plan.png");
+
+        // Catégorie 3 : Pour les plus jeunes
+        creerFilm("Aya de Yopougon", "Animation", 2013, "BASIC", "Chronique tendre et colorée de la vie à Abidjan à la fin des années 70.", "/images/Aya de Yopougon.png");
+        creerFilm("Black Panther", "Action / Fantastique", 2018, "PREMIUM", "Le roi T'Challa défend le Wakanda et son héritage face à une menace mondiale.", "/images/BlackPanther.png");
     }
 
-    private void creerFilm(String titre, String genre, int annee,
-                            String abonnement, String description) {
+    private void creerFilm(String titre, String genre, int annee, String abonnement, String description, String imageUri) {
         Film f = new Film();
         f.setTitre(titre);
         f.setGenre(genre);
         f.setAnnee(annee);
         f.setAbonnementRequis(abonnement);
         f.setDescription(description);
+        f.setImageUri(imageUri);
+        f.setAfficheBanniere(imageUri); 
+        f.setTrailerUrl("/videos/mboa.mp4");
         filmRepository.save(f);
     }
 }

@@ -15,9 +15,6 @@ public class FilmService {
     private FilmRepository filmRepository;
 
     // Niveaux d'abonnement (du plus bas au plus haut)
-    // BASIC peut voir BASIC seulement
-    // STANDARD peut voir BASIC + STANDARD
-    // PREMIUM peut voir tout
     public List<Film> filmsDisponibles(String typeAbonnement) {
         List<Film> tous = filmRepository.findAll();
         return tous.stream().filter(film -> {
@@ -55,7 +52,7 @@ public class FilmService {
         return filmRepository.save(film);
     }
 
-    // Modifier un film (admin)
+    // Modifier un film (admin) mis à jour
     public Film modifier(Long id, Film filmModifie) {
         Film film = filmRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Film introuvable."));
@@ -64,6 +61,12 @@ public class FilmService {
         film.setAnnee(filmModifie.getAnnee());
         film.setDescription(filmModifie.getDescription());
         film.setAbonnementRequis(filmModifie.getAbonnementRequis());
+        
+        // Synchronisation des nouveaux champs
+        film.setImageUri(filmModifie.getImageUri());
+        film.setAfficheBanniere(filmModifie.getAfficheBanniere());
+        film.setTrailerUrl(filmModifie.getTrailerUrl());
+        
         return filmRepository.save(film);
     }
 

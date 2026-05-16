@@ -20,28 +20,30 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private AdminRepository adminRepository;
 
-    // Spring Security appelle cette méthode au moment du login
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        // On cherche d'abord dans les admins
+        // 1. Contrôle d'accès pour le rôle Administrateur
         Admin admin = adminRepository.findByEmail(email).orElse(null);
         if (admin != null) {
-            return new org.springframework.security.core.userdetails.User(
-                admin.getEmail(),
-                admin.getMotDePasse(),
-                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
-            );
+            return org.springframework.security.core.userdetails.User.withUsername(admin.getEmail())
+                .password(admin.getMotDePasse())
+                .disabled(false)
+                .authorities(List.of(new SimpleGrantedAuthority("ROLE_ADMIN")))
+                .build();
         }
 
-        // Sinon on cherche dans les users
+        // 2. Contrôle d'accès pour les utilisateurs
         User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("Compte introuvable : " + email));
 
-        return new org.springframework.security.core.userdetails.User(
-            user.getEmail(),
-            user.getMotDePasse(),
-            List.of(new SimpleGrantedAuthority("ROLE_USER"))
-        );
+        // Un utilisateur n'ayant pas payé garde l'attribut "EN_ATTENTE" qui désactive son authentification
+        boolean compteBloque = "EN_ATTENTE".equalsIgnoreCase(user.getTypeAbonnement());
+
+        return org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
+            .password(user.getMotDePasse())
+            .disabled(compteBloque) // True bloque l'accès, False valide la connexion
+            .authorities(List.of(new SimpleGrantedAuthority("ROLE_USER")))
+            .build();
     }
 }
