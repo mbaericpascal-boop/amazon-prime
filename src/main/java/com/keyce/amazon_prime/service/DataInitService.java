@@ -1,15 +1,16 @@
 package com.keyce.amazon_prime.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.keyce.amazon_prime.model.Admin;
 import com.keyce.amazon_prime.model.Film;
 import com.keyce.amazon_prime.model.User;
 import com.keyce.amazon_prime.repository.AdminRepository;
 import com.keyce.amazon_prime.repository.FilmRepository;
 import com.keyce.amazon_prime.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 @Service
 public class DataInitService implements CommandLineRunner {

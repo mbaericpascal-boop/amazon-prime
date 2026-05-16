@@ -1,15 +1,18 @@
 package com.keyce.amazon_prime.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
 import com.keyce.amazon_prime.model.Admin;
 import com.keyce.amazon_prime.model.User;
 import com.keyce.amazon_prime.repository.AdminRepository;
 import com.keyce.amazon_prime.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.*;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
