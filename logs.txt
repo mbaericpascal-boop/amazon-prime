@@ -1,0 +1,28 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-05-15T11:43:49.747+01:00  INFO 10920 --- [amazon-prime] [           main] c.k.amazon_prime.AmazonPrimeApplication  : Starting AmazonPrimeApplication v0.0.1-SNAPSHOT using Java 25.0.3 with PID 10920 (C:\Users\User\Desktop\amazon-prime\target\amazon-prime-0.0.1-SNAPSHOT.jar started by User in C:\Users\User\Desktop\amazon-prime)
+2026-05-15T11:43:49.750+01:00 DEBUG 10920 --- [amazon-prime] [           main] c.k.amazon_prime.AmazonPrimeApplication  : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-05-15T11:43:49.751+01:00  INFO 10920 --- [amazon-prime] [           main] c.k.amazon_prime.AmazonPrimeApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-05-15T11:43:50.135+01:00  WARN 10920 --- [amazon-prime] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2026-05-15T11:43:50.644+01:00 ERROR 10920 --- [amazon-prime] [           main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web application could not be started as there was no org.springframework.boot.web.servlet.server.ServletWebServerFactory bean defined in the context.
+
+Action:
+
+Check your application's dependencies for a supported servlet web server.
+Check the configured web application type.
+

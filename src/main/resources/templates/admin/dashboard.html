@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin — CamStream</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <a class="logo" th:href="@{/admin/dashboard}">Cam<span>Stream</span> Admin</a>
+    <nav>
+        <a th:href="@{/catalogue}">🎬 Catalogue</a>
+        <a th:href="@{/admin/films/nouveau}" class="btn btn-primary" style="padding:0.4rem 1rem;">+ Ajouter film</a>
+        <a th:href="@{/logout}" style="color:#ce1126; margin-left:1rem;">Déconnexion</a>
+    </nav>
+</div>
+
+<div class="admin-container">
+    <h1 style="margin-bottom:1.5rem;">⚙️ Dashboard Administrateur</h1>
+
+    <!-- Messages de confirmation -->
+    <div th:if="${param.filmAjoute}"    class="alert alert-success">✅ Film ajouté avec succès.</div>
+    <div th:if="${param.filmModifie}"   class="alert alert-success">✅ Film modifié avec succès.</div>
+    <div th:if="${param.filmSupprime}"  class="alert alert-success">✅ Film supprimé.</div>
+    <div th:if="${param.userSupprime}"  class="alert alert-success">✅ Utilisateur supprimé.</div>
+    <div th:if="${param.abonnementModifie}" class="alert alert-success">✅ Abonnement mis à jour.</div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number" th:text="${totalFilms}">0</div>
+            <div class="stat-label">Films dans le catalogue</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" th:text="${totalUsers}">0</div>
+            <div class="stat-label">Utilisateurs inscrits</div>
+        </div>
+    </div>
+
+    <!-- TABLE FILMS -->
+    <h2 style="margin-bottom:1rem;">🎬 Gestion des Films</h2>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Titre</th><th>Genre</th><th>Année</th><th>Abonnement</th><th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="film : ${films}">
+                <td th:text="${film.titre}">-</td>
+                <td th:text="${film.genre}">-</td>
+                <td th:text="${film.annee}">-</td>
+                <td><span class="badge-genre" th:text="${film.abonnementRequis}">-</span></td>
+                <td>
+                    <a th:href="@{/admin/films/modifier/{id}(id=${film.id})}"
+                       class="btn btn-warning" style="padding:0.3rem 0.8rem; font-size:0.8rem;">Modifier</a>
+                    <form th:action="@{/admin/films/supprimer/{id}(id=${film.id})}"
+                          method="post" style="display:inline;"
+                          onsubmit="return confirm('Supprimer ce film ?')">
+                        <button type="submit" class="btn btn-danger"
+                                style="padding:0.3rem 0.8rem; font-size:0.8rem;">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- TABLE USERS -->
+    <h2 style="margin-bottom:1rem;">👥 Gestion des Utilisateurs</h2>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Nom</th><th>Email</th><th>Abonnement</th><th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.nom}">-</td>
+                <td th:text="${user.email}">-</td>
+                <td>
+                    <form th:action="@{/admin/users/abonnement/{id}(id=${user.id})}"
+                          method="post" style="display:flex; gap:0.5rem; align-items:center;">
+                        <select name="abonnement" style="background:#222; color:#fff; border:1px solid #333; border-radius:4px; padding:0.2rem;">
+                            <option value="BASIC"    th:selected="${user.typeAbonnement == 'BASIC'}">BASIC</option>
+                            <option value="STANDARD" th:selected="${user.typeAbonnement == 'STANDARD'}">STANDARD</option>
+                            <option value="PREMIUM"  th:selected="${user.typeAbonnement == 'PREMIUM'}">PREMIUM</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary"
+                                style="padding:0.2rem 0.6rem; font-size:0.8rem;">OK</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/admin/users/supprimer/{id}(id=${user.id})}"
+                          method="post"
+                          onsubmit="return confirm('Supprimer cet utilisateur ?')">
+                        <button type="submit" class="btn btn-danger"
+                                style="padding:0.3rem 0.8rem; font-size:0.8rem;">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

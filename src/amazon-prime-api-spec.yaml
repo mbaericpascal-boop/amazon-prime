@@ -1,0 +1,873 @@
+openapi: "3.0.3"
+
+info:
+  title: Amazon Prime API
+  description: |
+    Spécification REST de l'application Amazon Prime développée à KEYCE Informatique & Intelligence Artificielle.
+    Stack : Spring Boot 4.0.6 · Spring Security (HTTP Basic + Session) · JPA/H2 · Java 17 · Thymeleaf
+  version: "0.0.1-SNAPSHOT"
+  contact:
+    name: KEYCE Informatique
+    url: https://keyce.edu
+
+servers:
+  - url: http://localhost:8080
+    description: Serveur de développement local (H2 in-memory)
+
+tags:
+  - name: Authentification
+    description: Inscription, connexion, déconnexion
+  - name: Utilisateurs
+    description: Gestion du profil utilisateur connecté
+  - name: Films
+    description: Catalogue de films (accès selon niveau d'abonnement)
+  - name: Administration
+    description: Gestion des comptes et du catalogue (rôle ADMIN requis)
+  - name: Système
+    description: Console H2 et health check
+
+# ──────────────────────────────────────────────
+# COMPOSANTS RÉUTILISABLES
+# ──────────────────────────────────────────────
+components:
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Authentification HTTP Basic (email + mot de passe)
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: JSESSIONID
+      description: Session Spring Security après login
+
+  schemas:
+
+    Personne:
+      type: object
+      description: Classe abstraite partagée par User et Admin
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+          example: 1
+        nom:
+          type: string
+          example: "Alice Dupont"
+        email:
+          type: string
+          format: email
+          example: "alice@mail.com"
+        motDePasse:
+          type: string
+          format: password
+          writeOnly: true
+          example: "secret123"
+        role:
+          type: string
+          readOnly: true
+          example: "USER"
+      required:
+        - nom
+        - email
+        - motDePasse
+
+    User:
+      allOf:
+        - $ref: '#/components/schemas/Personne'
+        - type: object
+          description: Utilisateur abonné — table JPA "users"
+          properties:
+            typeAbonnement:
+              type: string
+              enum: [BASIC, STANDARD, PREMIUM]
+              example: "BASIC"
+            role:
+              type: string
+              readOnly: true
+              default: "USER"
+          required:
+            - typeAbonnement
+
+    Admin:
+      allOf:
+        - $ref: '#/components/schemas/Personne'
+        - type: object
+          description: Administrateur — table JPA "admins"
+          properties:
+            departement:
+              type: string
+              example: "DevOps"
+            role:
+              type: string
+              readOnly: true
+              default: "ADMIN"
+          required:
+            - departement
+
+    Film:
+      type: object
+      description: Film du catalogue — table JPA "films"
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+          example: 1
+        titre:
+          type: string
+          example: "Dune"
+        genre:
+          type: string
+          example: "Sci-Fi"
+        annee:
+          type: integer
+          example: 2021
+        abonnementRequis:
+          type: string
+          enum: [BASIC, STANDARD, PREMIUM]
+          description: Niveau d'abonnement minimum pour accéder au film
+          example: "BASIC"
+        description:
+          type: string
+          nullable: true
+          example: "Paul Atreides mène les peuples de Arrakis..."
+      required:
+        - titre
+        - genre
+        - annee
+        - abonnementRequis
+
+    FilmInput:
+      type: object
+      description: Corps de requête pour créer ou modifier un film
+      properties:
+        titre:
+          type: string
+          example: "Oppenheimer"
+        genre:
+          type: string
+          example: "Drame"
+        annee:
+          type: integer
+          example: 2023
+        abonnementRequis:
+          type: string
+          enum: [BASIC, STANDARD, PREMIUM]
+          example: "PREMIUM"
+        description:
+          type: string
+          nullable: true
+          example: "Le père de la bombe atomique."
+      required:
+        - titre
+        - genre
+        - annee
+        - abonnementRequis
+
+    UserRegisterInput:
+      type: object
+      properties:
+        nom:
+          type: string
+          example: "Alice Dupont"
+        email:
+          type: string
+          format: email
+          example: "alice@mail.com"
+        motDePasse:
+          type: string
+          format: password
+          example: "secret123"
+        typeAbonnement:
+          type: string
+          enum: [BASIC, STANDARD, PREMIUM]
+          example: "BASIC"
+      required:
+        - nom
+        - email
+        - motDePasse
+        - typeAbonnement
+
+    UserUpdateInput:
+      type: object
+      properties:
+        nom:
+          type: string
+          example: "Alice Martin"
+        typeAbonnement:
+          type: string
+          enum: [BASIC, STANDARD, PREMIUM]
+          example: "PREMIUM"
+
+    PasswordUpdateInput:
+      type: object
+      properties:
+        ancienMotDePasse:
+          type: string
+          format: password
+          example: "ancien123"
+        nouveauMotDePasse:
+          type: string
+          format: password
+          example: "nouveau456"
+      required:
+        - ancienMotDePasse
+        - nouveauMotDePasse
+
+    AdminCreateInput:
+      type: object
+      properties:
+        nom:
+          type: string
+          example: "Bob Admin"
+        email:
+          type: string
+          format: email
+          example: "bob@keyce.cm"
+        motDePasse:
+          type: string
+          format: password
+          example: "securePass"
+        departement:
+          type: string
+          example: "DevOps"
+      required:
+        - nom
+        - email
+        - motDePasse
+        - departement
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Opération effectuée avec succès"
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 400
+        error:
+          type: string
+          example: "Bad Request"
+        message:
+          type: string
+          example: "Email déjà utilisé"
+
+  responses:
+    Unauthorized:
+      description: Non authentifié — credentials manquants ou invalides
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Accès refusé — rôle insuffisant
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Ressource introuvable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflit — email déjà utilisé
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+
+paths:
+
+
+
+  /:
+    get:
+      tags: [Authentification]
+      summary: Page d'accueil
+      description: Retourne la vue Thymeleaf animée index.html avec les boutons "Commencer" et "Se connecter".
+      security: []
+      responses:
+        "200":
+          description: Vue HTML de la page d'accueil
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /register:
+    get:
+      tags: [Authentification]
+      summary: Formulaire d'inscription
+      security: []
+      responses:
+        "200":
+          description: Vue HTML du formulaire d'inscription
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      tags: [Authentification]
+      summary: Créer un compte utilisateur
+      description: |
+        Crée un nouvel utilisateur avec le type d'abonnement choisi.
+        Retourne une erreur 409 si l'email est déjà enregistré.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterInput'
+            example:
+              nom: "Alice Dupont"
+              email: "alice@mail.com"
+              motDePasse: "secret123"
+              typeAbonnement: "BASIC"
+      responses:
+        "201":
+          description: Compte créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Données invalides
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /login:
+    get:
+      tags: [Authentification]
+      summary: Formulaire de connexion
+      security: []
+      responses:
+        "200":
+          description: Vue HTML du formulaire de connexion
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      tags: [Authentification]
+      summary: Authentification Spring Security
+      description: |
+        Soumet les credentials. Spring Security crée une session et retourne un cookie JSESSIONID.
+        Redirige vers /dashboard (USER) ou /admin/dashboard (ADMIN) en cas de succès.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  format: email
+                  example: "alice@mail.com"
+                password:
+                  type: string
+                  format: password
+                  example: "secret123"
+              required: [username, password]
+      responses:
+        "302":
+          description: Redirection après authentification réussie
+          headers:
+            Location:
+              schema:
+                type: string
+              example: "/dashboard"
+            Set-Cookie:
+              schema:
+                type: string
+              example: "JSESSIONID=abc123; Path=/; HttpOnly"
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+
+  /logout:
+    post:
+      tags: [Authentification]
+      summary: Déconnexion et invalidation de session
+      security:
+        - cookieAuth: []
+      responses:
+        "302":
+          description: Redirection vers /login?logout
+          headers:
+            Location:
+              schema:
+                type: string
+              example: "/login?logout"
+
+  # ── UTILISATEURS ──────────────────────────────
+
+  /dashboard:
+    get:
+      tags: [Utilisateurs]
+      summary: Tableau de bord utilisateur
+      description: Affiche les films accessibles selon le typeAbonnement de l'utilisateur connecté.
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: Vue HTML du tableau de bord
+          content:
+            text/html:
+              schema:
+                type: string
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+
+  /users/me:
+    get:
+      tags: [Utilisateurs]
+      summary: Profil de l'utilisateur connecté
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      responses:
+        "200":
+          description: Données du profil
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      tags: [Utilisateurs]
+      summary: Mettre à jour le profil
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateInput'
+      responses:
+        "200":
+          description: Profil mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags: [Utilisateurs]
+      summary: Supprimer son propre compte
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      responses:
+        "200":
+          description: Compte supprimé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+
+  /users/me/password:
+    put:
+      tags: [Utilisateurs]
+      summary: Changer son mot de passe
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordUpdateInput'
+      responses:
+        "200":
+          description: Mot de passe changé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        "400":
+          description: Ancien mot de passe incorrect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+
+  # ── FILMS ──────────────────────────────────────
+
+  /films:
+    get:
+      tags: [Films]
+      summary: Liste des films accessibles
+      description: |
+        Retourne les films dont abonnementRequis <= typeAbonnement de l'utilisateur.
+        Règle d'accès : BASIC voit BASIC ; STANDARD voit BASIC + STANDARD ; PREMIUM voit tout.
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      parameters:
+        - name: genre
+          in: query
+          required: false
+          schema:
+            type: string
+          example: "Sci-Fi"
+        - name: abonnement
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [BASIC, STANDARD, PREMIUM]
+          example: "PREMIUM"
+        - name: annee
+          in: query
+          required: false
+          schema:
+            type: integer
+          example: 2021
+      responses:
+        "200":
+          description: Liste de films
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Film'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Films]
+      summary: Ajouter un film (ADMIN)
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilmInput'
+            example:
+              titre: "Oppenheimer"
+              genre: "Drame"
+              annee: 2023
+              abonnementRequis: "PREMIUM"
+              description: "Le père de la bombe atomique."
+      responses:
+        "201":
+          description: Film créé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+
+  /films/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 1
+    get:
+      tags: [Films]
+      summary: Détail d'un film
+      description: Accessible uniquement si abonnementRequis <= typeAbonnement de l'utilisateur.
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      responses:
+        "200":
+          description: Détail du film
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Films]
+      summary: Modifier un film (ADMIN)
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilmInput'
+      responses:
+        "200":
+          description: Film modifié
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Films]
+      summary: Supprimer un film (ADMIN)
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      responses:
+        "200":
+          description: Film supprimé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+
+  # ── ADMINISTRATION ─────────────────────────────
+
+  /admin/dashboard:
+    get:
+      tags: [Administration]
+      summary: Tableau de bord administrateur
+      description: Vue d'ensemble — nombre d'utilisateurs, films, répartition par abonnement.
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      responses:
+        "200":
+          description: Vue HTML du dashboard admin
+          content:
+            text/html:
+              schema:
+                type: string
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+
+  /admin/users:
+    get:
+      tags: [Administration]
+      summary: Lister tous les utilisateurs
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      responses:
+        "200":
+          description: Liste complète des utilisateurs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+
+  /admin/users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+        example: 2
+    get:
+      tags: [Administration]
+      summary: Détail d'un utilisateur
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      responses:
+        "200":
+          description: Utilisateur trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Administration]
+      summary: Modifier un utilisateur
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateInput'
+            example:
+              typeAbonnement: "PREMIUM"
+      responses:
+        "200":
+          description: Utilisateur modifié
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Administration]
+      summary: Supprimer un utilisateur
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      responses:
+        "200":
+          description: Utilisateur supprimé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+
+  /admin/admins:
+    get:
+      tags: [Administration]
+      summary: Lister tous les admins
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      responses:
+        "200":
+          description: Liste des administrateurs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Admin'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags: [Administration]
+      summary: Créer un administrateur
+      security:
+        - cookieAuth: []
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCreateInput'
+            example:
+              nom: "Bob Admin"
+              email: "bob@keyce.cm"
+              motDePasse: "securePass"
+              departement: "DevOps"
+      responses:
+        "201":
+          description: Admin créé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Admin'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  # ── SYSTÈME ────────────────────────────────────
+
+  /h2-console:
+    get:
+      tags: [Système]
+      summary: Console H2 (dev uniquement)
+      description: |
+        Interface web de la base H2 in-memory.
+        Activée via spring.h2.console.enabled=true dans application.properties.
+        JDBC URL : jdbc:h2:mem:testdb
+      security:
+        - basicAuth: []
+      responses:
+        "200":
+          description: Interface H2 Console
+          content:
+            text/html:
+              schema:
+                type: string
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+
+  /actuator/health:
+    get:
+      tags: [Système]
+      summary: Health check (si Spring Actuator activé)
+      security: []
+      responses:
+        "200":
+          description: Statut de l'application
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "UP"

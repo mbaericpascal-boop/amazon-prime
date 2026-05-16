@@ -1,0 +1,91 @@
+TYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon profil - CamStream</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/catalogue}">Cam<span>Stream</span></a>
+    <div class="navbar-links">
+        <a th:href="@{/catalogue}">← Catalogue</a>
+        <form th:action="@{/logout}" method="post" style="display:inline">
+            <button type="submit" class="btn-logout">Déconnexion</button>
+        </form>
+    </div>
+</nav>
+
+<div class="profil-container">
+    <div class="profil-card">
+        <div class="profil-avatar">👤</div>
+        <div class="profil-nom" th:text="${user.nom}">Nom</div>
+        <div class="profil-email" th:text="${user.email}">email</div>
+
+        <div class="profil-details">
+            <div class="profil-row">
+                <span>Abonnement</span>
+                <span class="badge"
+                      th:classappend="${user.typeAbonnement == 'PREMIUM'} ? 'badge-premium' :
+                                     (${user.typeAbonnement == 'STANDARD'} ? 'badge-standard' : 'badge-basic')"
+                      th:text="${user.typeAbonnement}"></span>
+            </div>
+            <div class="profil-row">
+                <span>Accès aux films</span>
+                <span th:text="${user.typeAbonnement == 'PREMIUM'} ? 'Tous les films' :
+                               (${user.typeAbonnement == 'STANDARD'} ? 'BASIC + STANDARD' : 'Films BASIC uniquement')"></span>
+            </div>
+            <div class="profil-row">
+                <span>Tarif mensuel</span>
+                <span th:text="${user.typeAbonnement == 'PREMIUM'} ? '5 000 FCFA/mois' :
+                               (${user.typeAbonnement == 'STANDARD'} ? '2 500 FCFA/mois' : 'Gratuit')"></span>
+            </div>
+            <div class="profil-row">
+                <span>Pays</span>
+                <span>🇨🇲 Cameroun</span>
+            </div>
+        </div>
+
+        <!-- Tarifs -->
+        <div style="margin-top:30px;">
+            <h3 style="margin-bottom:20px; color:#999; font-size:1rem;">Changer d'abonnement</h3>
+            <div class="tarifs-grid" style="grid-template-columns: 1fr;">
+
+                <div class="tarif-card" th:classappend="${user.typeAbonnement == 'BASIC'} ? 'recommande' : ''">
+                    <div class="tarif-nom">BASIC</div>
+                    <div class="tarif-prix">Gratuit <span>/mois</span></div>
+                    <ul class="tarif-features">
+                        <li>Films BASIC uniquement</li>
+                        <li>Qualité standard</li>
+                    </ul>
+                </div>
+
+                <div class="tarif-card" th:classappend="${user.typeAbonnement == 'STANDARD'} ? 'recommande' : ''">
+                    <div class="tarif-nom">STANDARD</div>
+                    <div class="tarif-prix">2 500 <span>FCFA/mois</span></div>
+                    <ul class="tarif-features">
+                        <li>Films BASIC + STANDARD</li>
+                        <li>Qualité HD</li>
+                        <li>Paiement MTN MoMo / Orange Money</li>
+                    </ul>
+                </div>
+
+                <div class="tarif-card" th:classappend="${user.typeAbonnement == 'PREMIUM'} ? 'recommande' : ''">
+                    <div class="tarif-nom">PREMIUM</div>
+                    <div class="tarif-prix">5 000 <span>FCFA/mois</span></div>
+                    <ul class="tarif-features">
+                        <li>Tous les films</li>
+                        <li>Qualité 4K Ultra HD</li>
+                        <li>Paiement MTN MoMo / Orange Money</li>
+                        <li>Téléchargement hors-ligne</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
