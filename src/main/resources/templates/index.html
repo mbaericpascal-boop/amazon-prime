@@ -15,23 +15,19 @@
             --texte:  #f0f0f0;
             --subtil: #888888;
         }
-
         * { margin:0; padding:0; box-sizing:border-box; }
-
         body {
             background: var(--noir);
             color: var(--texte);
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
         }
-
-        /* ===== BARRE CAMEROUN EN HAUT ===== */
         .flag-bar {
             height: 4px;
             background: linear-gradient(90deg, var(--vert) 33.3%, var(--rouge) 33.3%, var(--rouge) 66.6%, var(--jaune) 66.6%);
         }
 
-        /* ===== NAVBAR ===== */
+        /* NAVBAR */
         nav {
             display: flex;
             justify-content: space-between;
@@ -44,40 +40,17 @@
             z-index: 100;
             border-bottom: 1px solid #1a1a1a;
         }
-        .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
-            letter-spacing: 2px;
-            color: var(--texte);
-            text-decoration: none;
-        }
-        .logo span { color: var(--vert); }
-        .logo em { color: var(--rouge); font-style: normal; }
-        .nav-btns { display: flex; gap: 1rem; align-items: center; }
-        .btn {
-            padding: 0.55rem 1.4rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
-            border: none;
-            font-family: 'Outfit', sans-serif;
-        }
-        .btn-outline {
-            border: 1.5px solid #444;
-            color: var(--texte);
-            background: transparent;
-        }
-        .btn-outline:hover { border-color: var(--vert); color: var(--vert); }
-        .btn-green {
-            background: var(--vert);
-            color: white;
-        }
-        .btn-green:hover { background: #00c060; transform: translateY(-1px); }
+        .logo { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:2px; color:var(--texte); text-decoration:none; }
+        .logo span { color:var(--vert); }
+        .logo em { color:var(--rouge); font-style:normal; }
+        .nav-btns { display:flex; gap:1rem; align-items:center; }
+        .btn { padding:.55rem 1.4rem; border-radius:6px; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; cursor:pointer; border:none; font-family:'Outfit',sans-serif; }
+        .btn-outline { border:1.5px solid #444; color:var(--texte); background:transparent; }
+        .btn-outline:hover { border-color:var(--vert); color:var(--vert); }
+        .btn-green { background:var(--vert); color:white; }
+        .btn-green:hover { background:#00c060; transform:translateY(-1px); }
 
-        /* ===== HERO ===== */
+        /* HERO */
         .hero {
             min-height: 92vh;
             display: flex;
@@ -94,268 +67,148 @@
                 radial-gradient(ellipse 40% 60% at 30% 80%, rgba(206,17,38,0.06) 0%, transparent 50%),
                 radial-gradient(ellipse 50% 50% at 80% 10%, rgba(252,209,22,0.05) 0%, transparent 50%);
         }
-        /* grille de fond subtile */
         .hero-bg::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            content:'';
+            position:absolute;
+            inset:0;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
             background-size: 60px 60px;
         }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 650px;
-        }
+        .hero-content { position:relative; z-index:2; max-width:650px; }
         .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(0,166,81,0.1);
-            border: 1px solid rgba(0,166,81,0.3);
-            color: var(--vert);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            animation: fadeUp 0.6s ease both;
+            display:inline-flex; align-items:center; gap:.5rem;
+            background:rgba(0,166,81,0.1); border:1px solid rgba(0,166,81,0.3);
+            color:var(--vert); padding:.4rem 1rem; border-radius:20px;
+            font-size:.82rem; font-weight:600; letter-spacing:1px; text-transform:uppercase;
+            margin-bottom:1.5rem; animation:fadeUp .6s ease both;
         }
         .hero h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(3.5rem, 8vw, 6.5rem);
-            line-height: 0.95;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-            animation: fadeUp 0.6s 0.1s ease both;
+            font-family:'Bebas Neue',sans-serif;
+            font-size:clamp(3.5rem,8vw,6.5rem);
+            line-height:.95; letter-spacing:2px; margin-bottom:1.5rem;
+            animation:fadeUp .6s .1s ease both;
         }
-        .hero h1 .line-vert  { color: var(--vert); display: block; }
-        .hero h1 .line-blanc { color: var(--texte); display: block; }
-        .hero h1 .line-rouge { color: var(--rouge); display: block; }
-        .hero-desc {
-            font-size: 1.1rem;
-            color: #aaa;
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            max-width: 500px;
-            animation: fadeUp 0.6s 0.2s ease both;
-        }
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            animation: fadeUp 0.6s 0.3s ease both;
-        }
-        .btn-hero {
-            padding: 0.85rem 2rem;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-            font-family: 'Outfit', sans-serif;
-        }
-        .btn-hero-primary {
-            background: var(--vert);
-            color: white;
-        }
-        .btn-hero-primary:hover { background: #00c060; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,166,81,0.3); }
-        .btn-hero-secondary {
-            background: transparent;
-            color: var(--texte);
-            border: 1.5px solid #333;
-        }
-        .btn-hero-secondary:hover { border-color: #fff; transform: translateY(-2px); }
+        .hero h1 .line-vert  { color:var(--vert);  display:block; }
+        .hero h1 .line-blanc { color:var(--texte); display:block; }
+        .hero h1 .line-rouge { color:var(--rouge); display:block; }
+        .hero-desc { font-size:1.1rem; color:#aaa; line-height:1.7; margin-bottom:2rem; max-width:500px; animation:fadeUp .6s .2s ease both; }
+        .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; animation:fadeUp .6s .3s ease both; }
+        .btn-hero { padding:.85rem 2rem; font-size:1rem; font-weight:700; border-radius:8px; text-decoration:none; transition:all .2s; border:none; cursor:pointer; font-family:'Outfit',sans-serif; }
+        .btn-hero-primary { background:var(--vert); color:white; }
+        .btn-hero-primary:hover { background:#00c060; transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,166,81,.3); }
+        .btn-hero-secondary { background:transparent; color:var(--texte); border:1.5px solid #333; }
+        .btn-hero-secondary:hover { border-color:#fff; transform:translateY(-2px); }
 
-        /* films flottants côté droit */
-        .hero-films {
-            position: absolute;
-            right: 5%;
-            top: 50%;
-            transform: translateY(-50%);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            z-index: 2;
-            animation: fadeLeft 0.8s 0.4s ease both;
-        }
-        @media (max-width: 900px) { .hero-films { display: none; } }
-        .mini-card {
-            width: 140px;
-            background: #161616;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid #222;
-            transition: transform 0.2s;
-        }
-        .mini-card:hover { transform: scale(1.04); }
-        .mini-card:nth-child(2) { margin-top: 2rem; }
-        .mini-card:nth-child(4) { margin-top: -2rem; }
-        .mini-poster {
-            height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-        }
-        .mini-info { padding: 0.6rem; }
-        .mini-title { font-size: 0.75rem; font-weight: 600; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .mini-badge { font-size: 0.65rem; padding: 0.1rem 0.4rem; border-radius: 3px; display: inline-block; }
-        .badge-basic    { background: rgba(0,166,81,0.2);  color: var(--vert); }
-        .badge-standard { background: rgba(0,102,204,0.2); color: #4da6ff; }
-        .badge-premium  { background: rgba(252,209,22,0.2);color: var(--jaune); }
+        /* MINI CARDS HERO */
+        .hero-films { position:absolute; right:5%; top:50%; transform:translateY(-50%); display:grid; grid-template-columns:1fr 1fr; gap:1rem; z-index:2; animation:fadeLeft .8s .4s ease both; }
+        @media(max-width:900px){ .hero-films{display:none;} }
+        .mini-card { width:140px; background:#161616; border-radius:10px; overflow:hidden; border:1px solid #222; transition:transform .2s; }
+        .mini-card:hover { transform:scale(1.04); }
+        .mini-card:nth-child(2){ margin-top:2rem; }
+        .mini-card:nth-child(4){ margin-top:-2rem; }
+        .mini-poster { height:90px; display:flex; align-items:center; justify-content:center; font-size:2.5rem; }
+        .mini-info { padding:.6rem; }
+        .mini-title { font-size:.75rem; font-weight:600; margin-bottom:.2rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .mini-badge { font-size:.65rem; padding:.1rem .4rem; border-radius:3px; display:inline-block; }
+        .badge-basic    { background:rgba(0,166,81,.2);  color:var(--vert); }
+        .badge-standard { background:rgba(0,102,204,.2); color:#4da6ff; }
+        .badge-premium  { background:rgba(252,209,22,.2);color:var(--jaune); }
 
-        /* ===== STATS ===== */
-        .stats {
-            display: flex;
-            gap: 3rem;
-            padding: 2rem 5%;
-            background: #0e0e0e;
-            border-top: 1px solid #1a1a1a;
-            border-bottom: 1px solid #1a1a1a;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .stat { text-align: center; }
-        .stat-num {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem;
-            color: var(--vert);
-            line-height: 1;
-        }
-        .stat-label { font-size: 0.8rem; color: var(--subtil); text-transform: uppercase; letter-spacing: 1px; }
+        /* STATS */
+        .stats { display:flex; gap:3rem; padding:2rem 5%; background:#0e0e0e; border-top:1px solid #1a1a1a; border-bottom:1px solid #1a1a1a; flex-wrap:wrap; justify-content:center; }
+        .stat { text-align:center; }
+        .stat-num { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; color:var(--vert); line-height:1; }
+        .stat-label { font-size:.8rem; color:var(--subtil); text-transform:uppercase; letter-spacing:1px; }
 
-        /* ===== OFFRES ===== */
-        .section { padding: 5rem 5%; }
-        .section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
-        }
-        .section-title span { color: var(--vert); }
-        .section-sub { color: var(--subtil); margin-bottom: 3rem; font-size: 1rem; }
+        /* COMMENT CA MARCHE */
+        .section { padding:5rem 5%; }
+        .section-title { font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px; margin-bottom:.5rem; }
+        .section-title span { color:var(--vert); }
+        .section-sub { color:var(--subtil); margin-bottom:3rem; font-size:1rem; }
 
-        .offres-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            max-width: 900px;
+        .etapes-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2rem; max-width:1000px; }
+        .etape-card {
+            background:#111; border:1px solid #1e1e1e; border-radius:16px;
+            padding:2rem; position:relative; text-align:center;
+            transition:transform .2s, border-color .2s;
         }
-        .offre-card {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 16px;
-            padding: 2rem;
-            position: relative;
-            transition: transform 0.2s, border-color 0.2s;
+        .etape-card:hover { transform:translateY(-4px); border-color:#2a2a2a; }
+        .etape-num {
+            position:absolute; top:-16px; left:50%; transform:translateX(-50%);
+            width:32px; height:32px; background:var(--vert); border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:white;
         }
-        .offre-card:hover { transform: translateY(-6px); }
-        .offre-card.populaire {
-            border-color: var(--vert);
-            background: linear-gradient(135deg, #111 60%, rgba(0,166,81,0.06));
-        }
-        .pop-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--vert);
-            color: white;
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 0.25rem 1rem;
+        .etape-icon { font-size:2.5rem; margin:1rem 0 .8rem; }
+        .etape-titre { font-weight:700; font-size:1rem; margin-bottom:.5rem; }
+        .etape-desc { color:var(--subtil); font-size:.88rem; line-height:1.6; }
+
+        /* OFFRES */
+        .offres-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; max-width:900px; }
+        .offre-card { background:#111; border:1px solid #222; border-radius:16px; padding:2rem; position:relative; transition:transform .2s, border-color .2s; }
+        .offre-card:hover { transform:translateY(-6px); }
+        .offre-card.populaire { border-color:var(--vert); background:linear-gradient(135deg,#111 60%,rgba(0,166,81,.06)); }
+        .pop-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--vert); color:white; font-size:.72rem; font-weight:700; padding:.25rem 1rem; border-radius:20px; letter-spacing:1px; text-transform:uppercase; }
+        .offre-icon { font-size:2.5rem; margin-bottom:1rem; }
+        .offre-nom { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:2px; }
+        .offre-prix { font-family:'Bebas Neue',sans-serif; font-size:3rem; line-height:1; margin:.5rem 0; }
+        .offre-prix .devise { font-size:1.2rem; color:var(--subtil); }
+        .offre-prix .periode { font-size:1rem; color:var(--subtil); }
+        .offre-features { list-style:none; margin:1.5rem 0; }
+        .offre-features li { padding:.4rem 0; color:#aaa; font-size:.9rem; display:flex; align-items:center; gap:.5rem; }
+        .offre-features li::before { content:"✓"; color:var(--vert); font-weight:bold; }
+        .offre-features li.off { color:#444; }
+        .offre-features li.off::before { content:"✕"; color:#333; }
+        .offre-btn { display:block; text-align:center; padding:.8rem; border-radius:8px; text-decoration:none; font-weight:700; font-size:.95rem; transition:all .2s; }
+        .offre-btn-green { background:var(--vert); color:white; }
+        .offre-btn-green:hover { background:#00c060; }
+        .offre-btn-outline { border:1.5px solid #333; color:var(--texte); }
+        .offre-btn-outline:hover { border-color:var(--vert); color:var(--vert); }
+
+        /* TEMOIGNAGES */
+        .temoignages-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+        .temoignage-card { background:#111; border:1px solid #1e1e1e; border-radius:16px; padding:1.8rem; transition:transform .2s; }
+        .temoignage-card:hover { transform:translateY(-4px); border-color:#2a2a2a; }
+        .temoignage-stars { color:var(--jaune); font-size:1.1rem; margin-bottom:.8rem; }
+        .temoignage-texte { color:#bbb; font-size:.92rem; line-height:1.7; margin-bottom:1.2rem; font-style:italic; }
+        .temoignage-auteur { display:flex; align-items:center; gap:.8rem; }
+        .temoignage-avatar { width:40px; height:40px; border-radius:50%; background:var(--vert); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+        .temoignage-nom { font-weight:700; font-size:.9rem; }
+        .temoignage-ville { color:var(--subtil); font-size:.8rem; }
+
+        /* GENRES */
+        .genres { padding:0 5% 5rem; }
+        .genres-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:1rem; }
+        .genre-pill { background:#111; border:1px solid #222; border-radius:10px; padding:1.2rem; text-align:center; text-decoration:none; color:var(--texte); transition:all .2s; }
+        .genre-pill:hover { border-color:var(--vert); background:rgba(0,166,81,.08); transform:translateY(-2px); }
+        .genre-pill .genre-icon { font-size:2rem; display:block; margin-bottom:.4rem; }
+        .genre-pill .genre-nom { font-size:.85rem; font-weight:600; }
+
+        /* CTA FINAL */
+        .cta-final {
+            margin: 0 5% 5rem;
+            background: linear-gradient(135deg, rgba(0,166,81,.1), rgba(206,17,38,.05));
+            border: 1px solid rgba(0,166,81,.2);
             border-radius: 20px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .offre-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-        .offre-nom { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; }
-        .offre-prix {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem;
-            line-height: 1;
-            margin: 0.5rem 0;
-        }
-        .offre-prix .devise { font-size: 1.2rem; color: var(--subtil); }
-        .offre-prix .periode { font-size: 1rem; color: var(--subtil); }
-        .offre-features { list-style: none; margin: 1.5rem 0; }
-        .offre-features li {
-            padding: 0.4rem 0;
-            color: #aaa;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .offre-features li::before { content: "✓"; color: var(--vert); font-weight: bold; }
-        .offre-features li.off { color: #444; }
-        .offre-features li.off::before { content: "✕"; color: #333; }
-        .offre-btn {
-            display: block;
+            padding: 4rem 3rem;
             text-align: center;
-            padding: 0.8rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.95rem;
-            transition: all 0.2s;
         }
-        .offre-btn-green { background: var(--vert); color: white; }
-        .offre-btn-green:hover { background: #00c060; }
-        .offre-btn-outline { border: 1.5px solid #333; color: var(--texte); }
-        .offre-btn-outline:hover { border-color: var(--vert); color: var(--vert); }
+        .cta-final h2 { font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,5vw,3.5rem); letter-spacing:2px; margin-bottom:1rem; }
+        .cta-final p { color:#aaa; margin-bottom:2rem; font-size:1.05rem; }
 
-        /* ===== GENRES ===== */
-        .genres { padding: 0 5% 5rem; }
-        .genres-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 1rem;
-        }
-        .genre-pill {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 10px;
-            padding: 1.2rem;
-            text-align: center;
-            text-decoration: none;
-            color: var(--texte);
-            transition: all 0.2s;
-        }
-        .genre-pill:hover { border-color: var(--vert); background: rgba(0,166,81,0.08); }
-        .genre-pill .genre-icon { font-size: 2rem; display: block; margin-bottom: 0.4rem; }
-        .genre-pill .genre-nom  { font-size: 0.85rem; font-weight: 600; }
+        /* FOOTER */
+        footer { background:#0a0a0a; border-top:1px solid #1a1a1a; padding:3rem 5%; }
+        .footer-content { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:2rem; }
+        .footer-links { display:flex; gap:2rem; flex-wrap:wrap; }
+        .footer-links a { color:var(--subtil); text-decoration:none; font-size:.85rem; transition:color .2s; }
+        .footer-links a:hover { color:var(--vert); }
+        .footer-bottom { border-top:1px solid #1a1a1a; padding-top:1.5rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+        footer p { color:var(--subtil); font-size:.85rem; }
+        .villes { display:flex; gap:1rem; flex-wrap:wrap; }
+        .ville-tag { background:#1a1a1a; color:#666; padding:.2rem .7rem; border-radius:4px; font-size:.75rem; }
 
-        /* ===== FOOTER ===== */
-        footer {
-            background: #0a0a0a;
-            border-top: 1px solid #1a1a1a;
-            padding: 3rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        footer .logo { font-size: 1.5rem; }
-        footer p { color: var(--subtil); font-size: 0.85rem; }
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeLeft {
-            from { opacity: 0; transform: translateY(-50%) translateX(30px); }
-            to   { opacity: 1; transform: translateY(-50%) translateX(0); }
-        }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeLeft { from{opacity:0;transform:translateY(-50%) translateX(30px)} to{opacity:1;transform:translateY(-50%) translateX(0)} }
     </style>
 </head>
 <body>
@@ -366,8 +219,8 @@
 <nav>
     <a class="logo" href="#"><span>Cam</span><em>Stream</em></a>
     <div class="nav-btns">
-        <a href="/login"    class="btn btn-outline">Se connecter</a>
-        <a href="/register" class="btn btn-green">Commencer</a>
+        <a th:href="@{/login}"    class="btn btn-outline">Se connecter</a>
+        <a th:href="@{/register}" class="btn btn-green">Commencer</a>
     </div>
 </nav>
 
@@ -382,82 +235,84 @@
             <span class="line-rouge">Culture.</span>
         </h1>
         <p class="hero-desc">
-            Découvrez le meilleur du cinéma africain et mondial. 
-            Des abonnements à partir de <strong style="color:var(--vert)">2 000 FCFA/mois</strong>, 
-            sans engagement.
+            Découvrez le meilleur du cinéma africain et mondial.
+            Des abonnements à partir de <strong style="color:var(--vert)">2 000 FCFA/mois</strong>,
+            sans engagement, payable depuis Yaoundé ou Douala.
         </p>
         <div class="hero-cta">
-            <a href="/register" class="btn-hero btn-hero-primary">🚀 Démarrer gratuitement</a>
-            <a href="/login"    class="btn-hero btn-hero-secondary">Se connecter</a>
+            <a th:href="@{/register}" class="btn-hero btn-hero-primary">🚀 Démarrer maintenant</a>
+            <a th:href="@{/login}"    class="btn-hero btn-hero-secondary">Se connecter</a>
         </div>
     </div>
-
-    <!-- Mini cards films -->
     <div class="hero-films">
         <div class="mini-card">
             <div class="mini-poster" style="background:linear-gradient(135deg,#1a2a1a,#0d1f0d);">🌍</div>
-            <div class="mini-info">
-                <div class="mini-title">Mboa</div>
-                <span class="mini-badge badge-basic">BASIC</span>
-            </div>
+            <div class="mini-info"><div class="mini-title">Mboa</div><span class="mini-badge badge-basic">BASIC</span></div>
         </div>
         <div class="mini-card">
             <div class="mini-poster" style="background:linear-gradient(135deg,#1a1a2a,#0d0d1f);">⚔️</div>
-            <div class="mini-info">
-                <div class="mini-title">Black Panther</div>
-                <span class="mini-badge badge-standard">STANDARD</span>
-            </div>
+            <div class="mini-info"><div class="mini-title">Black Panther</div><span class="mini-badge badge-standard">STANDARD</span></div>
         </div>
         <div class="mini-card">
             <div class="mini-poster" style="background:linear-gradient(135deg,#2a1a1a,#1f0d0d);">👑</div>
-            <div class="mini-info">
-                <div class="mini-title">Wakanda Forever</div>
-                <span class="mini-badge badge-premium">PREMIUM</span>
-            </div>
+            <div class="mini-info"><div class="mini-title">Wakanda Forever</div><span class="mini-badge badge-premium">PREMIUM</span></div>
         </div>
         <div class="mini-card">
             <div class="mini-poster" style="background:linear-gradient(135deg,#1a2a2a,#0d1f1f);">🌊</div>
-            <div class="mini-info">
-                <div class="mini-title">La Pirogue</div>
-                <span class="mini-badge badge-basic">BASIC</span>
-            </div>
+            <div class="mini-info"><div class="mini-title">La Pirogue</div><span class="mini-badge badge-basic">BASIC</span></div>
         </div>
     </div>
 </section>
 
 <!-- STATS -->
 <div class="stats">
-    <div class="stat">
-        <div class="stat-num">8+</div>
-        <div class="stat-label">Films disponibles</div>
-    </div>
-    <div class="stat">
-        <div class="stat-num">3</div>
-        <div class="stat-label">Formules d'abonnement</div>
-    </div>
-    <div class="stat">
-        <div class="stat-num">2 000</div>
-        <div class="stat-label">FCFA / mois dès</div>
-    </div>
-    <div class="stat">
-        <div class="stat-num">🇨🇲</div>
-        <div class="stat-label">Made in Cameroun</div>
-    </div>
+    <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Films disponibles</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Formules d'abonnement</div></div>
+    <div class="stat"><div class="stat-num">2 000</div><div class="stat-label">FCFA / mois dès</div></div>
+    <div class="stat"><div class="stat-num">🇨🇲</div><div class="stat-label">Made in Cameroun</div></div>
 </div>
 
-<!-- OFFRES -->
+<!-- COMMENT CA MARCHE -->
 <section class="section">
+    <h2 class="section-title">Comment ça <span>marche</span></h2>
+    <p class="section-sub">En 3 étapes simples, profitez du streaming</p>
+    <div class="etapes-grid">
+        <div class="etape-card">
+            <div class="etape-num">1</div>
+            <div class="etape-icon">📝</div>
+            <div class="etape-titre">Créez votre compte</div>
+            <div class="etape-desc">Inscrivez-vous en 30 secondes avec votre email. Choisissez votre formule BASIC, STANDARD ou PREMIUM.</div>
+        </div>
+        <div class="etape-card">
+            <div class="etape-num">2</div>
+            <div class="etape-icon">💳</div>
+            <div class="etape-titre">Choisissez votre offre</div>
+            <div class="etape-desc">Dès 2 000 FCFA/mois. Paiement simple, sans engagement. Changez de formule quand vous voulez.</div>
+        </div>
+        <div class="etape-card">
+            <div class="etape-num">3</div>
+            <div class="etape-icon">🎬</div>
+            <div class="etape-titre">Profitez du catalogue</div>
+            <div class="etape-desc">Accédez aux films africains, blockbusters et séries depuis n'importe quel appareil, partout au Cameroun.</div>
+        </div>
+        <div class="etape-card">
+            <div class="etape-num">4</div>
+            <div class="etape-icon">🔄</div>
+            <div class="etape-titre">Sans engagement</div>
+            <div class="etape-desc">Annulez à tout moment. Montez ou descendez d'offre selon vos besoins et votre budget du moment.</div>
+        </div>
+    </div>
+</section>
+
+<!-- OFFRES -->
+<section class="section" style="padding-top:0">
     <h2 class="section-title">Nos <span>Offres</span></h2>
     <p class="section-sub">Choisissez la formule qui vous convient, sans engagement</p>
-
     <div class="offres-grid">
-        <!-- BASIC -->
         <div class="offre-card">
             <div class="offre-icon">🟢</div>
             <div class="offre-nom">Basic</div>
-            <div class="offre-prix">
-                2 000 <span class="devise">FCFA</span><span class="periode">/mois</span>
-            </div>
+            <div class="offre-prix">2 000 <span class="devise">FCFA</span><span class="periode">/mois</span></div>
             <ul class="offre-features">
                 <li>Films africains & classiques</li>
                 <li>Qualité SD</li>
@@ -465,17 +320,13 @@
                 <li class="off">Films récents</li>
                 <li class="off">Téléchargement offline</li>
             </ul>
-            <a href="/register" class="offre-btn offre-btn-outline">Choisir Basic</a>
+            <a th:href="@{/register}" class="offre-btn offre-btn-outline">Choisir Basic</a>
         </div>
-
-        <!-- STANDARD -->
         <div class="offre-card populaire">
             <div class="pop-badge">⭐ Populaire</div>
             <div class="offre-icon">🔵</div>
             <div class="offre-nom">Standard</div>
-            <div class="offre-prix" style="color:var(--vert)">
-                4 500 <span class="devise">FCFA</span><span class="periode">/mois</span>
-            </div>
+            <div class="offre-prix" style="color:var(--vert)">4 500 <span class="devise">FCFA</span><span class="periode">/mois</span></div>
             <ul class="offre-features">
                 <li>Tout le catalogue Basic</li>
                 <li>Films récents & séries</li>
@@ -483,16 +334,12 @@
                 <li>2 écrans simultanés</li>
                 <li class="off">Téléchargement offline</li>
             </ul>
-            <a href="/register" class="offre-btn offre-btn-green">Choisir Standard</a>
+            <a th:href="@{/register}" class="offre-btn offre-btn-green">Choisir Standard</a>
         </div>
-
-        <!-- PREMIUM -->
         <div class="offre-card">
             <div class="offre-icon">🟡</div>
             <div class="offre-nom">Premium</div>
-            <div class="offre-prix" style="color:var(--jaune)">
-                7 500 <span class="devise">FCFA</span><span class="periode">/mois</span>
-            </div>
+            <div class="offre-prix" style="color:var(--jaune)">7 500 <span class="devise">FCFA</span><span class="periode">/mois</span></div>
             <ul class="offre-features">
                 <li>Catalogue complet sans limite</li>
                 <li>Qualité 4K Ultra HD</li>
@@ -500,7 +347,39 @@
                 <li>Téléchargement offline</li>
                 <li>Accès prioritaire nouveautés</li>
             </ul>
-            <a href="/register" class="offre-btn offre-btn-outline">Choisir Premium</a>
+            <a th:href="@{/register}" class="offre-btn offre-btn-outline">Choisir Premium</a>
+        </div>
+    </div>
+</section>
+
+<!-- TEMOIGNAGES -->
+<section class="section" style="padding-top:0">
+    <h2 class="section-title">Ils nous font <span>confiance</span></h2>
+    <p class="section-sub">Des utilisateurs satisfaits partout au Cameroun</p>
+    <div class="temoignages-grid">
+        <div class="temoignage-card">
+            <div class="temoignage-stars">★★★★★</div>
+            <p class="temoignage-texte">"Enfin une plateforme qui propose des films africains de qualité ! Je regarde Mboa avec toute ma famille le week-end. L'abonnement BASIC est très abordable."</p>
+            <div class="temoignage-auteur">
+                <div class="temoignage-avatar">👩</div>
+                <div><div class="temoignage-nom">Marie-Claire Essomba</div><div class="temoignage-ville">📍 Yaoundé, Centre</div></div>
+            </div>
+        </div>
+        <div class="temoignage-card">
+            <div class="temoignage-stars">★★★★★</div>
+            <p class="temoignage-texte">"J'ai upgradé vers PREMIUM pour regarder Wakanda Forever en 4K. La qualité est incroyable ! Je recommande à tous mes collègues au bureau."</p>
+            <div class="temoignage-auteur">
+                <div class="temoignage-avatar">👨</div>
+                <div><div class="temoignage-nom">Rodrigue Tchamda</div><div class="temoignage-ville">📍 Douala, Littoral</div></div>
+            </div>
+        </div>
+        <div class="temoignage-card">
+            <div class="temoignage-stars">★★★★☆</div>
+            <p class="temoignage-texte">"Super application, interface simple et claire. J'apprécie surtout de payer en FCFA sans complications. Le catalogue africain est vraiment bien choisi."</p>
+            <div class="temoignage-auteur">
+                <div class="temoignage-avatar">👩</div>
+                <div><div class="temoignage-nom">Aïcha Bello</div><div class="temoignage-ville">📍 Garoua, Nord</div></div>
+            </div>
         </div>
     </div>
 </section>
@@ -510,20 +389,45 @@
     <h2 class="section-title">Explorer par <span>Genre</span></h2>
     <p class="section-sub">Du cinéma africain aux blockbusters internationaux</p>
     <div class="genres-grid">
-        <a href="/login" class="genre-pill"><span class="genre-icon">💥</span><span class="genre-nom">Action</span></a>
-        <a href="/login" class="genre-pill"><span class="genre-icon">😂</span><span class="genre-nom">Comédie</span></a>
-        <a href="/login" class="genre-pill"><span class="genre-icon">🎭</span><span class="genre-nom">Drame</span></a>
-        <a href="/login" class="genre-pill"><span class="genre-icon">💕</span><span class="genre-nom">Romance</span></a>
-        <a href="/login" class="genre-pill"><span class="genre-icon">🧭</span><span class="genre-nom">Aventure</span></a>
-        <a href="/login" class="genre-pill"><span class="genre-icon">🎥</span><span class="genre-nom">Documentaire</span></a>
+        <a th:href="@{/login}" class="genre-pill"><span class="genre-icon">💥</span><span class="genre-nom">Action</span></a>
+        <a th:href="@{/login}" class="genre-pill"><span class="genre-icon">😂</span><span class="genre-nom">Comédie</span></a>
+        <a th:href="@{/login}" class="genre-pill"><span class="genre-icon">🎭</span><span class="genre-nom">Drame</span></a>
+        <a th:href="@{/login}" class="genre-pill"><span class="genre-icon">💕</span><span class="genre-nom">Romance</span></a>
+        <a th:href="@{/login}" class="genre-pill"><span class="genre-icon">🧭</span><span class="genre-nom">Aventure</span></a>
+        <a th:href="@{/login}" class="genre-pill"><span class="genre-icon">🎥</span><span class="genre-nom">Documentaire</span></a>
     </div>
 </section>
 
+<!-- CTA FINAL -->
+<div class="cta-final">
+    <h2>Prêt à commencer l'aventure <span style="color:var(--vert)">CamStream</span> ?</h2>
+    <p>Rejoignez des milliers de Camerounais qui profitent déjà du meilleur du streaming africain.</p>
+    <a th:href="@{/register}" class="btn-hero btn-hero-primary" style="font-size:1.1rem; padding:1rem 2.5rem;">
+        🚀 Créer mon compte gratuitement
+    </a>
+</div>
+
 <!-- FOOTER -->
 <footer>
-    <a class="logo" href="#"><span>Cam</span><em>Stream</em></a>
-    <p>© 2026 CamStream — Projet KEYCE Informatique 🇨🇲</p>
-    <p style="color:#333;">Yaoundé • Douala • Cameroun</p>
+    <div class="footer-content">
+        <a class="logo" href="#"><span>Cam</span><em>Stream</em></a>
+        <div class="footer-links">
+            <a th:href="@{/login}">Se connecter</a>
+            <a th:href="@{/register}">S'inscrire</a>
+            <a href="#">À propos</a>
+            <a href="#">Contact</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 CamStream — Projet KEYCE Informatique 🇨🇲</p>
+        <div class="villes">
+            <span class="ville-tag">Yaoundé</span>
+            <span class="ville-tag">Douala</span>
+            <span class="ville-tag">Bafoussam</span>
+            <span class="ville-tag">Garoua</span>
+            <span class="ville-tag">Maroua</span>
+        </div>
+    </div>
 </footer>
 
 </body>
