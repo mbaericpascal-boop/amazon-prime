@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -18,13 +19,11 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
-    // Encodeur de mot de passe BCrypt (standard sécurisé)
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Relie notre service de login à l'encodeur
     @Bean
     public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -33,29 +32,37 @@ public class SecurityConfig {
         return provider;
     }
 
-    // Règles d'accès aux pages
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authenticationProvider(authProvider())
             .authorizeHttpRequests(auth -> auth
-
-                // Pages publiques (accessibles sans connexion)
-                .requestMatchers("/", "/login", "/register", "/css/**", "/js/**", "/images/**").permitAll()
-
-                // Pages réservées aux admins
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-
-                // Toutes les autres pages nécessitent d'être connecté
+                // Fichiers statiques TOUJOURS accessibles
+                .requestMatchers(
+                    new AntPathRequestMatcher("/css/**"),
+                    new AntPathRequestMatcher("/js/**"),
+                    new AntPathRequestMatcher("/images/**"),
+                    new AntPathRequestMatcher("/webjars/**")
+                ).permitAll()
+                // Pages publiques
+                .requestMatchers(
+                    new AntPathRequestMatcher("/"),
+                    new AntPathRequestMatcher("/login"),
+                    new AntPathRequestMatcher("/register"),
+                    new AntPathRequestMatcher("/h2-console/**")
+                ).permitAll()
+                // Pages admin uniquement
+                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+                // Tout le reste : connecté
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login")             // Notre page de login personnalisée
-                .loginProcessingUrl("/login")    // URL qui traite le formulaire
-                .usernameParameter("email")      // On utilise l'email comme identifiant
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .usernameParameter("email")
                 .passwordParameter("motDePasse")
-                .defaultSuccessUrl("/catalogue", true)  // Redirection après login réussi
-                .failureUrl("/login?erreur=true")        // Redirection si échec
+                .defaultSuccessUrl("/catalogue", true)
+                .failureUrl("/login?erreur=true")
                 .permitAll()
             )
             .logout(logout -> logout
@@ -65,9 +72,8 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .permitAll()
             )
-            // Autoriser la console H2 (base de données en dev)
             .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/h2-console/**")
+                .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
             )
             .headers(headers -> headers
                 .frameOptions(frame -> frame.sameOrigin())
