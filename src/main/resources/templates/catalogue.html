@@ -3,83 +3,74 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Catalogue - CamStream</title>
+    <title>Catalogue — CamStream</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-    <a class="navbar-brand" th:href="@{/catalogue}">Cam<span>Stream</span></a>
-    <div class="navbar-links">
-        <a th:href="@{/catalogue}">Accueil</a>
-        <a th:href="@{/profil}">Mon profil</a>
-        <span th:if="${abonnement}" class="badge"
-              th:classappend="${abonnement == 'PREMIUM'} ? 'badge-premium' : (${abonnement == 'STANDARD'} ? 'badge-standard' : 'badge-basic')"
-              th:text="${abonnement}"></span>
-        <form th:action="@{/logout}" method="post" style="display:inline">
-            <button type="submit" class="btn-logout">Déconnexion</button>
-        </form>
-    </div>
-</nav>
+<div class="navbar">
+    <a class="logo" th:href="@{/catalogue}">Cam<span>Stream</span></a>
+    <nav>
+        <a th:href="@{/catalogue}">🎬 Catalogue</a>
+        <a th:href="@{/profil}">👤 Profil</a>
+        <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')" style="color:#fcd116;">⚙️ Admin</a>
+        <span class="badge-abonnement" th:classappend="${abonnement}" th:text="${abonnement}">BASIC</span>
+        <a th:href="@{/logout}" style="color:#ce1126; margin-left:1rem;">Déconnexion</a>
+    </nav>
+</div>
 
 <div class="page-container">
-    <div class="page-header">
-        <h1>🎬 Catalogue de films</h1>
-        <form th:action="@{/catalogue}" method="get" class="search-bar">
-            <input type="text" name="recherche" placeholder="Rechercher un film..."
-                   th:value="${recherche}"/>
-            <button type="submit" class="btn btn-primary">Rechercher</button>
-            <a th:href="@{/catalogue}" class="btn btn-outline">Tout voir</a>
-        </form>
-    </div>
+    <h1 class="page-title">Catalogue <span>Films & Séries</span></h1>
 
-    <!-- FILTRES PAR GENRE -->
-    <div class="filter-tabs">
-        <a th:href="@{/catalogue}" class="filter-tab"
-           th:classappend="${genreSelectionne == null} ? ' active' : ''">Tous</a>
-        <a th:href="@{/catalogue(genre='Action')}" class="filter-tab"
-           th:classappend="${genreSelectionne == 'Action'} ? ' active' : ''">Action</a>
-        <a th:href="@{/catalogue(genre='Drame')}" class="filter-tab"
-           th:classappend="${genreSelectionne == 'Drame'} ? ' active' : ''">Drame</a>
-        <a th:href="@{/catalogue(genre='Comédie')}" class="filter-tab"
-           th:classappend="${genreSelectionne == 'Comédie'} ? ' active' : ''">Comédie</a>
-        <a th:href="@{/catalogue(genre='Romance')}" class="filter-tab"
-           th:classappend="${genreSelectionne == 'Romance'} ? ' active' : ''">Romance</a>
-        <a th:href="@{/catalogue(genre='Aventure')}" class="filter-tab"
-           th:classappend="${genreSelectionne == 'Aventure'} ? ' active' : ''">Aventure</a>
-    </div>
+    <form th:action="@{/catalogue}" method="get" class="filtres">
+        <input type="text" name="recherche" placeholder="🔍 Rechercher un film..." th:value="${recherche}"/>
+        <select name="genre" onchange="this.form.submit()">
+            <option value="">Tous les genres</option>
+            <option value="Action"      th:selected="${genreSelectionne == 'Action'}">Action</option>
+            <option value="Drame"       th:selected="${genreSelectionne == 'Drame'}">Drame</option>
+            <option value="Comédie"     th:selected="${genreSelectionne == 'Comédie'}">Comédie</option>
+            <option value="Romance"     th:selected="${genreSelectionne == 'Romance'}">Romance</option>
+            <option value="Aventure"    th:selected="${genreSelectionne == 'Aventure'}">Aventure</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        <a th:href="@{/catalogue}" class="btn btn-secondary">Réinitialiser</a>
+    </form>
 
-    <!-- GRILLE FILMS -->
-    <div th:if="${films.isEmpty()}" style="text-align:center; padding:60px; color:#666;">
-        <div style="font-size:3rem">🎬</div>
-        <p style="margin-top:10px">Aucun film trouvé.</p>
-    </div>
-
-    <div class="films-grid" th:unless="${films.isEmpty()}">
-        <a th:each="film : ${films}" th:href="@{/film/{id}(id=${film.id})}" class="film-card">
-            <div class="film-poster">
-                <span th:text="${film.genre == 'Action'} ? '💥' :
-                               (${film.genre == 'Drame'} ? '🎭' :
-                               (${film.genre == 'Comédie'} ? '😂' :
-                               (${film.genre == 'Romance'} ? '❤️' : '🎬')))">🎬</span>
-                <div class="film-poster-overlay">
-                    <span class="badge"
-                          th:classappend="${film.abonnementRequis == 'PREMIUM'} ? 'badge-premium' :
-                                         (${film.abonnementRequis == 'STANDARD'} ? 'badge-standard' : 'badge-basic')"
-                          th:text="${film.abonnementRequis}"></span>
-                </div>
-            </div>
-            <div class="film-info">
-                <h3 th:text="${film.titre}">Titre</h3>
-                <div class="film-meta">
-                    <span th:text="${film.genre}">Genre</span>
-                    <span th:text="${film.annee}">2024</span>
+    <div class="films-grid">
+        <a th:each="film : ${films}" th:href="@{/film/{id}(id=${film.id})}"
+           style="text-decoration:none; color:inherit;">
+            <div class="film-card">
+                <div class="film-card-poster">🎬</div>
+                <div class="film-card-body">
+                    <div class="film-card-title" th:text="${film.titre}">Titre</div>
+                    <div class="film-card-meta">
+                        <span th:text="${film.annee}">2024</span> •
+                        <span th:text="${film.genre}">Genre</span>
+                    </div>
+                    <!-- Étoiles de notation -->
+                    <div class="film-card-stars">
+                        <span th:with="moy=${moyennes[film.id]}">
+                            <span th:if="${moy != null and moy > 0}">
+                                <span th:text="${moy >= 1} ? '★' : '☆'">★</span>
+                                <span th:text="${moy >= 2} ? '★' : '☆'">★</span>
+                                <span th:text="${moy >= 3} ? '★' : '☆'">★</span>
+                                <span th:text="${moy >= 4} ? '★' : '☆'">★</span>
+                                <span th:text="${moy >= 5} ? '★' : '☆'">★</span>
+                                <span class="note-num" th:text="'(' + ${nbVotes[film.id]} + ' avis)'"></span>
+                            </span>
+                            <span th:if="${moy == null or moy == 0}" style="color:#555; font-size:0.75rem;">Pas encore noté</span>
+                        </span>
+                    </div>
+                    <span class="badge-genre" th:text="${film.abonnementRequis}">BASIC</span>
                 </div>
             </div>
         </a>
     </div>
-</div>
 
+    <div th:if="${#lists.isEmpty(films)}" style="text-align:center; padding:3rem; color:#aaa;">
+        <p style="font-size:3rem;">🎭</p>
+        <p>Aucun film trouvé.</p>
+    </div>
+</div>
 </body>
 </html>

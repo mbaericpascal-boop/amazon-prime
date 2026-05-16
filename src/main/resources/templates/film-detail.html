@@ -2,59 +2,117 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${film.titre} + ' - CamStream'">Film - CamStream</title>
+    <title th:text="${film.titre} + ' — CamStream'">Film</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
-<nav class="navbar">
-    <a class="navbar-brand" th:href="@{/catalogue}">Cam<span>Stream</span></a>
-    <div class="navbar-links">
+<div class="navbar">
+    <a class="logo" th:href="@{/catalogue}">Cam<span>Stream</span></a>
+    <nav>
         <a th:href="@{/catalogue}">← Retour au catalogue</a>
-        <form th:action="@{/logout}" method="post" style="display:inline">
-            <button type="submit" class="btn-logout">Déconnexion</button>
-        </form>
-    </div>
-</nav>
-
-<div class="film-detail">
-    <div class="film-detail-header">
-        <div class="film-detail-poster">
-            <span th:text="${film.genre == 'Action'} ? '💥' :
-                           (${film.genre == 'Drame'} ? '🎭' :
-                           (${film.genre == 'Comédie'} ? '😂' :
-                           (${film.genre == 'Romance'} ? '❤️' : '🎬')))">🎬</span>
-        </div>
-        <div class="film-detail-info">
-            <h1 th:text="${film.titre}">Titre du film</h1>
-            <p>
-                <span class="badge"
-                      th:classappend="${film.abonnementRequis == 'PREMIUM'} ? 'badge-premium' :
-                                     (${film.abonnementRequis == 'STANDARD'} ? 'badge-standard' : 'badge-basic')"
-                      th:text="${film.abonnementRequis}"></span>
-            </p>
-            <p style="margin-top:12px;">
-                🎭 <span th:text="${film.genre}">Genre</span> &nbsp;|&nbsp;
-                📅 <span th:text="${film.annee}">2024</span>
-            </p>
-            <p style="margin-top:15px; line-height:1.7;" th:text="${film.description}">Description...</p>
-
-            <!-- Accès autorisé -->
-            <a th:if="${acces}" href="#" class="play-btn">
-                ▶ Regarder maintenant
-            </a>
-
-            <!-- Accès bloqué -->
-            <div th:unless="${acces}" class="acces-bloque">
-                <p style="font-size:1.1rem; margin-bottom:10px;">🔒 Contenu réservé <strong th:text="${film.abonnementRequis}"></strong></p>
-                <p style="color:#999; margin-bottom:15px;">
-                    Votre abonnement actuel (<strong th:text="${abonnement}"></strong>) ne donne pas accès à ce film.
-                </p>
-                <a th:href="@{/profil}" class="btn btn-primary">Améliorer mon abonnement</a>
-            </div>
-        </div>
-    </div>
+        <a th:href="@{/logout}" style="color:#ce1126;">Déconnexion</a>
+    </nav>
 </div>
 
+<div style="max-width:800px; margin:2rem auto; padding:0 1rem;">
+    <div class="film-detail">
+
+        <!-- Confirmation note enregistrée -->
+        <div th:if="${noteEnregistree}" class="alert alert-success" style="margin-bottom:1rem;">
+            ✅ Votre note a été enregistrée !
+        </div>
+
+        <div class="film-detail-header">
+            <div class="film-detail-poster">🎬</div>
+            <div class="film-detail-info">
+                <h1 th:text="${film.titre}">Titre</h1>
+                <div class="meta">
+                    <span th:text="${film.annee}">2024</span> •
+                    <span th:text="${film.genre}">Genre</span> •
+                    <span class="badge-genre" th:text="${film.abonnementRequis}">BASIC</span>
+                </div>
+
+                <!-- Moyenne des notes -->
+                <div style="margin:0.8rem 0; display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
+                    <span th:if="${nbVotes > 0}">
+                        <span class="stars-display">
+                            <span th:text="${moyenne >= 1} ? '★' : '☆'"></span>
+                            <span th:text="${moyenne >= 2} ? '★' : '☆'"></span>
+                            <span th:text="${moyenne >= 3} ? '★' : '☆'"></span>
+                            <span th:text="${moyenne >= 4} ? '★' : '☆'"></span>
+                            <span th:text="${moyenne >= 5} ? '★' : '☆'"></span>
+                        </span>
+                        <span class="stars-moyenne" th:text="${moyenne}">4.5</span>
+                        <span class="stars-count" th:text="'(' + ${nbVotes} + ' avis)'"></span>
+                    </span>
+                    <span th:if="${nbVotes == 0}" style="color:#555; font-size:0.9rem;">
+                        Aucune note pour l'instant — soyez le premier !
+                    </span>
+                </div>
+
+                <p th:text="${film.description}">Description...</p>
+
+                <div style="margin-top:1rem;">
+                    <small style="color:#aaa;">Abonnement requis :</small>
+                    <strong th:text="${film.abonnementRequis}" style="color:#00a651;"></strong>
+                    <span style="color:#aaa;"> | Votre abonnement : </span>
+                    <strong th:text="${abonnement}" style="color:#fcd116;"></strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lecteur si accès OK -->
+        <div th:if="${acces}">
+            <div class="player-mock">▶️</div>
+            <p style="text-align:center; color:#aaa; margin-top:0.5rem; font-size:0.85rem;">
+                Lecteur vidéo — intégration à venir
+            </p>
+        </div>
+
+        <!-- Accès bloqué -->
+        <div th:unless="${acces}" class="acces-bloque">
+            <p style="font-size:2rem;">🔒</p>
+            <h3 style="color:#ff6b6b; margin:0.5rem 0;">Accès réservé</h3>
+            <p style="color:#aaa;">
+                Ce film nécessite un abonnement
+                <strong th:text="${film.abonnementRequis}" style="color:#fff;"></strong>.
+            </p>
+            <a th:href="@{/profil}" class="btn btn-warning" style="margin-top:1rem;">
+                Upgrader mon abonnement
+            </a>
+        </div>
+
+        <!-- FORMULAIRE DE NOTATION -->
+        <div th:if="${acces}" class="notation-form"
+             style="border-top:1px solid #333; padding-top:1.5rem; margin-top:1.5rem;">
+
+            <h4>⭐ Donner votre note</h4>
+
+            <!-- Note actuelle de l'user -->
+            <div th:if="${maNote > 0}" class="note-actuelle">
+                Votre note actuelle :
+                <span th:text="${maNote == 1} ? '★☆☆☆☆' :
+                               ${maNote == 2} ? '★★☆☆☆' :
+                               ${maNote == 3} ? '★★★☆☆' :
+                               ${maNote == 4} ? '★★★★☆' : '★★★★★'"></span>
+                (<span th:text="${maNote}"></span>/5)
+            </div>
+
+            <form th:action="@{/film/{id}/noter(id=${film.id})}" method="post">
+                <div class="stars-input">
+                    <input type="radio" id="s5" name="note" value="5" th:checked="${maNote == 5}"/><label for="s5" title="5 étoiles">★</label>
+                    <input type="radio" id="s4" name="note" value="4" th:checked="${maNote == 4}"/><label for="s4" title="4 étoiles">★</label>
+                    <input type="radio" id="s3" name="note" value="3" th:checked="${maNote == 3}"/><label for="s3" title="3 étoiles">★</label>
+                    <input type="radio" id="s2" name="note" value="2" th:checked="${maNote == 2}"/><label for="s2" title="2 étoiles">★</label>
+                    <input type="radio" id="s1" name="note" value="1" th:checked="${maNote == 1}"/><label for="s1" title="1 étoile">★</label>
+                </div>
+                <button type="submit" class="btn-noter">
+                    <span th:text="${maNote > 0} ? 'Modifier ma note' : 'Envoyer ma note'">Envoyer</span>
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
 </body>
 </html>
