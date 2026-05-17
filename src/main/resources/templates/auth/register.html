@@ -2,45 +2,102 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Inscription - CamStream</title>
+    <title>Inscription Premium — CamStream</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .payment-zone { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 6px; margin-top: 15px; border: 1px solid #333; }
+        .hidden-field { display: none; }
+    </style>
 </head>
 <body>
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-logo">Cam<span>Stream</span></div>
-        <h2>Créer un compte</h2>
+        <h2>Créez votre compte & Abonnez-vous</h2>
 
         <div th:if="${erreur}" class="alert alert-danger" th:text="${erreur}"></div>
 
-        <form th:action="@{/register}" th:object="${user}" method="post">
+        <form th:action="@{/register}" method="post">
             <div class="form-group">
                 <label>Nom complet</label>
-                <input type="text" th:field="*{nom}" placeholder="Jean Mbarga" required/>
+                <input type="text" name="nom" placeholder="Jean Mbarga" required/>
             </div>
             <div class="form-group">
                 <label>Adresse email</label>
-                <input type="email" th:field="*{email}" placeholder="votremail@gmail.com" required/>
+                <input type="email" name="email" placeholder="votremail@gmail.com" required/>
             </div>
             <div class="form-group">
                 <label>Mot de passe</label>
-                <input type="password" th:field="*{motDePasse}" placeholder="Minimum 6 caractères" required/>
+                <input type="password" name="motDePasse" placeholder="Minimum 6 caractères" required/>
             </div>
+
             <div class="form-group">
-                <label>Choisir votre abonnement</label>
-                <select th:field="*{typeAbonnement}">
-                    <option value="BASIC">BASIC — Gratuit (contenu limité)</option>
-                    <option value="STANDARD">STANDARD — 2 500 FCFA/mois</option>
-                    <option value="PREMIUM">PREMIUM — 5 000 FCFA/mois</option>
+                <label>Sélectionner votre forfait (Paiement Immédiat)</label>
+                <select name="typeAbonnement" id="forfaitSelect" onchange="updatePrice()" required>
+                    <option value="BASIC">BASIC — 2 000 FCFA / mois</option>
+                    <option value="STANDARD" selected>STANDARD — 4 500 FCFA / mois</option>
+                    <option value="PREMIUM">PREMIUM — 7 500 FCFA / mois</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary btn-full">Créer mon compte</button>
+
+            <div class="payment-zone">
+                <h4 style="color: #e50914; margin-top: 0;">Passerelle de Paiement Sécurisée</h4>
+                <div class="form-group">
+                    <label>Mode de règlement</label>
+                    <select name="modePaiement" id="modePaiement" onchange="togglePaymentFields()" required>
+                        <option value="ORANGE_MONEY">Orange Money (CM)</option>
+                        <option value="MTN_MOMO">MTN MoMo (CM)</option>
+                        <option value="PAYPAL">PayPal (International)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="phoneGroup">
+                    <label>Numéro de téléphone Camerounais</label>
+                    <input type="text" name="telephone" id="telephone" placeholder="Ex: 699999999" required/>
+                </div>
+
+                <div class="form-group hidden-field" id="paypalGroup">
+                    <label>Adresse Email du compte PayPal</label>
+                    <input type="email" name="paypalEmail" id="paypalEmail" placeholder="Ex: finance@paypal.cm"/>
+                </div>
+
+                <div class="form-group">
+                    <label>ID / Référence de la transaction SMS ou Facture</label>
+                    <input type="text" name="referenceTransaction" placeholder="Ex: TXN-984628" required/>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" style="margin-top: 20px;">
+                Payer et Activer mon accès
+            </button>
         </form>
 
         <div class="auth-footer">
-            Déjà un compte ? <a th:href="@{/login}">Se connecter</a>
+            Déjà abonné ? <a th:href="@{/login}">Se connecter</a>
         </div>
     </div>
 </div>
+
+<script>
+    function togglePaymentFields() {
+        const mode = document.getElementById('modePaiement').value;
+        const phoneGroup = document.getElementById('phoneGroup');
+        const paypalGroup = document.getElementById('paypalGroup');
+        const phoneInput = document.getElementById('telephone');
+        const paypalInput = document.getElementById('paypalEmail');
+
+        if (mode === 'PAYPAL') {
+            phoneGroup.classList.add('hidden-field');
+            phoneInput.removeAttribute('required');
+            paypalGroup.classList.remove('hidden-field');
+            paypalInput.setAttribute('required', 'required');
+        } else {
+            paypalGroup.classList.add('hidden-field');
+            paypalInput.removeAttribute('required');
+            phoneGroup.classList.remove('hidden-field');
+            phoneInput.setAttribute('required', 'required');
+        }
+    }
+</script>
 </body>
 </html>
