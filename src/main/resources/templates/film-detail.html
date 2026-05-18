@@ -67,7 +67,7 @@
             <p>
                 <span class="badge"
                       th:classappend="${film.abonnementRequis == 'PREMIUM'} ? 'badge-premium' :
-                                     (${film.abonnementRequis == 'STANDARD'} ? 'badge-standard' : 'badge-basic')"
+                                   (${film.abonnementRequis == 'STANDARD'} ? 'badge-standard' : 'badge-basic')"
                       th:text="${film.abonnementRequis}"></span>
             </p>
             <p style="margin-top:12px;">
@@ -79,7 +79,8 @@
             <div th:if="${acces}" class="video-container">
                 <h3 style="color: #00de6e; font-size: 1.2rem; margin-bottom: 15px;">▶ Lecteur CamStream</h3>
                 <video controls width="100%" th:poster="@{'/' + ${film.afficheBanniere != null ? film.afficheBanniere : film.imageUri}}" style="border-radius: 8px; border: 1px solid #1d3528;">
-                    <source th:src="@{'/' + ${film.trailerUrl}}" type="video/mp4">
+                    
+                    <source th:src="@{/videos/whatsapp.mp4}" type="video/mp4">
                     
                     <track th:if="${film?.sousTitreFrUrl != null}" 
                         kind="subtitles" 
@@ -93,7 +94,7 @@
                         srclang="en" 
                         label="English">
                                             
-                                        Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+                    Votre navigateur ne supporte pas la lecture de vidéos HTML5.
                 </video>
             </div>
 

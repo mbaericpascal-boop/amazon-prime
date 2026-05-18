@@ -19,7 +19,16 @@
             overflow-x: hidden; 
         }
 
-        /* Bannière principale avec reflet vert poudré */
+        /* Nav Bar adjustments */
+        .search-container { position: relative; max-width: 450px; margin: 0 auto; }
+        .search-input { 
+            width: 100%; padding: 10px 20px; border-radius: 25px; 
+            border: 1px solid var(--camstream-card-border); background-color: #111612; color: white;
+            transition: border-color 0.3s;
+        }
+        .search-input:focus { border-color: var(--camstream-green); outline: none; box-shadow: 0 0 8px var(--camstream-powder); }
+
+        /* Hero Banner */
         .hero-banner { 
             position: relative; 
             background-size: cover; 
@@ -39,12 +48,11 @@
 
         .banner-content { position: relative; z-index: 2; max-width: 600px; padding-left: 50px; }
 
-        /* Sliders de films */
+        /* Sliders & Cards */
         .film-slider { display: flex; overflow-x: auto; gap: 15px; padding: 15px 0; scroll-behavior: smooth; }
         .film-slider::-webkit-scrollbar { height: 6px; }
         .film-slider::-webkit-scrollbar-thumb { background: var(--camstream-card-border); border-radius: 4px; }
 
-        /* Cartes de films style CamStream */
         .film-card { min-width: 220px; max-width: 220px; cursor: pointer; transition: transform 0.3s ease, border-color 0.3s ease; position: relative; }
         .film-card:hover { 
             transform: scale(1.08); 
@@ -56,18 +64,8 @@
 
         .badge-abo { position: absolute; top: 8px; right: 8px; font-size: 0.75rem; padding: 3px 6px; border-radius: 3px; font-weight: bold; }
         
-        /* Boutons personnalisés */
         .btn-camstream-primary { background-color: var(--camstream-green); color: #000000; font-weight: bold; }
         .btn-camstream-primary:hover { background-color: #00b85c; color: #000000; box-shadow: 0 0 12px rgba(0, 222, 110, 0.5); }
-        
-        /* Barre de recherche prédictive */
-        .search-container { position: relative; max-width: 450px; margin: 0 auto; }
-        .search-input { 
-            width: 100%; padding: 10px 20px; border-radius: 25px; 
-            border: 1px solid var(--camstream-card-border); background-color: #111612; color: white;
-            transition: border-color 0.3s;
-        }
-        .search-input:focus { border-color: var(--camstream-green); outline: none; box-shadow: 0 0 8px var(--camstream-powder); }
         
         .suggestions-box { 
             position: absolute; width: 100%; background: #121814; border: 1px solid var(--camstream-card-border);
@@ -88,7 +86,7 @@
             <div id="suggestions" class="suggestions-box"></div>
         </div>
         
-        <span class="text-light" th:text="${user != null ? user.prenom : 'Invité'}">Utilisateur</span>
+        <span class="text-light" th:text="${user != null ? user.nom : 'Invité'}">Utilisateur</span>
     </div>
 
     <div id="mainBanner" class="hero-banner mt-3" style="background-image: url('/images/mboa-banner.jpg');">
@@ -104,7 +102,6 @@
     </div>
 
     <div class="container-fluid px-5 mt-4">
-        
         <h5 class="fw-bold mb-1" style="color: #e2e2e2;">Tout le catalogue</h5>
         <div class="film-slider mb-5">
             <div th:each="film : ${films}" class="film-card" 
@@ -129,7 +126,6 @@
     </div>
 
     <script>
-        // Changement dynamique du contenu de la bannière lors du clic sur un film
         function changerFilm(element) {
             const id = element.getAttribute('data-id');
             const titre = element.getAttribute('data-title');
@@ -144,7 +140,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Requêtes asynchrones vers l'API de recherche
         document.getElementById('searchBar').addEventListener('input', function() {
             let query = this.value;
             let suggestionsBox = document.getElementById('suggestions');
@@ -174,7 +169,6 @@
                 .catch(err => console.error("Erreur de recherche asynchrone : ", err));
         });
 
-        // Masquer les suggestions au clic extérieur
         document.addEventListener('click', function(e) {
             if (e.target.id !== 'searchBar') {
                 document.getElementById('suggestions').style.display = 'none';
