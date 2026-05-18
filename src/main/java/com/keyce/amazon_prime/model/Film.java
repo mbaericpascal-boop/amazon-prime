@@ -29,6 +29,10 @@ public class Film {
     private String afficheBanniere; // Grande affiche pour le haut de l'écran
     private String trailerUrl;      // Lien vers l'extrait vidéo (.mp4)
 
+    // Nouveaux champs pour les sous-titres demandés par le prof
+    private String sousTitreFrUrl;  // Chemin vers le fichier .vtt français
+    private String sousTitreEnUrl;  // Chemin vers le fichier .vtt anglais
+
     public Film() {}
 
     // Getters et Setters existants
@@ -50,7 +54,7 @@ public class Film {
     public String getDescription() { return description; }
     public void setDescription(String d) { this.description = d; }
 
-    // Nouveaux Getters et Setters pour la refonte visuelle
+    // Getters et Setters pour la refonte visuelle
     public String getImageUri() { return imageUri; }
     public void setImageUri(String imageUri) { this.imageUri = imageUri; }
 
@@ -59,4 +63,11 @@ public class Film {
 
     public String getTrailerUrl() { return trailerUrl; }
     public void setTrailerUrl(String trailerUrl) { this.trailerUrl = trailerUrl; }
+
+    // Nouveaux Getters et Setters pour la gestion des sous-titres
+    public String getSousTitreFrUrl() { return sousTitreFrUrl; }
+    public void setSousTitreFrUrl(String sousTitreFrUrl) { this.sousTitreFrUrl = sousTitreFrUrl; }
+
+    public String getSousTitreEnUrl() { return sousTitreEnUrl; }
+    public void setSousTitreEnUrl(String sousTitreEnUrl) { this.sousTitreEnUrl = sousTitreEnUrl; }
 }

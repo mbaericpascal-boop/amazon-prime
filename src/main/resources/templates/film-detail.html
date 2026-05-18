@@ -4,6 +4,35 @@
     <meta charset="UTF-8">
     <title th:text="${film.titre} + ' - CamStream'">Film - CamStream</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        /* Styles rapides pour intégrer proprement la nouvelle affiche et le lecteur vidéo */
+        .film-detail-poster {
+            width: 300px;
+            min-height: 400px;
+            background-color: #111612;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #1d3528;
+        }
+        .img-poster {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .video-container {
+            margin-top: 25px;
+            max-width: 800px;
+            width: 100%;
+        }
+        video::cue {
+            background: rgba(0, 0, 0, 0.7);
+            color: #00de6e; /* Sous-titres aux couleurs de CamStream ! */
+            font-size: 1.1rem;
+        }
+    </style>
 </head>
 <body>
 
@@ -19,12 +48,20 @@
 
 <div class="film-detail">
     <div class="film-detail-header">
+        
         <div class="film-detail-poster">
-            <span th:text="${film.genre == 'Action'} ? '💥' :
+            <img th:if="${film.imageUri != null && !film.imageUri.isEmpty()}" 
+                 th:src="@{'/' + ${film.imageUri}}" 
+                 th:alt="${film.titre}" 
+                 class="img-poster">
+            
+            <span th:unless="${film.imageUri != null && !film.imageUri.isEmpty()}" 
+                  th:text="${film.genre == 'Action'} ? '💥' :
                            (${film.genre == 'Drame'} ? '🎭' :
                            (${film.genre == 'Comédie'} ? '😂' :
                            (${film.genre == 'Romance'} ? '❤️' : '🎬')))">🎬</span>
         </div>
+        
         <div class="film-detail-info">
             <h1 th:text="${film.titre}">Titre du film</h1>
             <p>
@@ -39,12 +76,27 @@
             </p>
             <p style="margin-top:15px; line-height:1.7;" th:text="${film.description}">Description...</p>
 
-            <!-- Accès autorisé -->
-            <a th:if="${acces}" href="#" class="play-btn">
-                ▶ Regarder maintenant
-            </a>
+            <div th:if="${acces}" class="video-container">
+                <h3 style="color: #00de6e; font-size: 1.2rem; margin-bottom: 15px;">▶ Lecteur CamStream</h3>
+                <video controls width="100%" th:poster="@{'/' + ${film.afficheBanniere != null ? film.afficheBanniere : film.imageUri}}" style="border-radius: 8px; border: 1px solid #1d3528;">
+                    <source th:src="@{'/' + ${film.trailerUrl}}" type="video/mp4">
+                    
+                    <track th:if="${film?.sousTitreFrUrl != null}" 
+                        kind="subtitles" 
+                        th:src="@{'/' + ${film.sousTitreFrUrl}}" 
+                        srclang="fr" 
+                        label="Français" default>
+                        
+                    <track th:if="${film?.sousTitreEnUrl != null}" 
+                        kind="subtitles" 
+                        th:src="@{'/' + ${film.sousTitreEnUrl}}" 
+                        srclang="en" 
+                        label="English">
+                                            
+                                        Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+                </video>
+            </div>
 
-            <!-- Accès bloqué -->
             <div th:unless="${acces}" class="acces-bloque">
                 <p style="font-size:1.1rem; margin-bottom:10px;">🔒 Contenu réservé <strong th:text="${film.abonnementRequis}"></strong></p>
                 <p style="color:#999; margin-bottom:15px;">

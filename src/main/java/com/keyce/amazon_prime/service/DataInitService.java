@@ -47,23 +47,23 @@ public class DataInitService implements CommandLineRunner {
         
         // --- Insertion des 13 vrais films ---
         // Catégorie 1 : Films populaires au Cameroun
-        creerFilm("Mboa", "Drame", 2022, "BASIC", "Une histoire poignante sur la vie à Douala, entre tradition et modernité.", "/images/Mboa.png");
-        creerFilm("Bataille des chéries", "Drame", 2023, "STANDARD", "Intrigues, pouvoir et trahisons au cœur d'une rivalité amoureuse intense.", "/images/Bataille des chéries .png");
-        creerFilm("La patrie d'abord", "Action", 2019, "STANDARD", "Un hommage plein d'action aux forces de défense engagées pour la paix.", "/images/La patrie d'abord.png");
-        creerFilm("Le Retour au Village", "Comédie", 2021, "BASIC", "Un jeune diplômé quitte la ville pour redécouvrir ses racines de manière hilarante.", "/images/Le Retour au Village.png");
-        creerFilm("Le Juste", "Action / Thriller", 2023, "PREMIUM", "Un homme intègre se dresse seul contre la corruption dans son quartier.", "/images/Le juste.png");
-        creerFilm("Waka", "Drame", 2014, "BASIC", "Le parcours courageux d'une femme bien décidée à s'en sortir face aux épreuves.", "/images/Waka.png");
+        creerFilm("Mboa", "Drame", 2022, "BASIC", "Une histoire poignante sur la vie à Douala, entre tradition et modernité.", "/images/mboa-banner.jpg");
+        creerFilm("Bataille des chéries", "Drame", 2023, "STANDARD", "Intrigues, pouvoir et trahisons au cœur d'une rivalité amoureuse intense.", "/images/Batailledeschéries .png");
+        creerFilm("La patrie d'abord", "Action", 2019, "STANDARD", "Un hommage plein d'action aux forces de défense engagées pour la paix.", "/images/Lapatried'abord.png");
+        creerFilm("Le Retour au Village", "Comédie", 2021, "BASIC", "Un jeune diplômé quitte la ville pour redécouvrir ses racines de manière hilarante.", "/images/waka.png");
+        creerFilm("Le Juste", "Action / Thriller", 2023, "PREMIUM", "Un homme intègre se dresse seul contre la corruption dans son quartier.", "/images/Beautésauvage.png");
+        creerFilm("Waka", "Drame", 2014, "BASIC", "Le parcours courageux d'une femme bien décidée à s'en sortir face aux épreuves.", "/images/waka.png");
 
         // Catégorie 2 : Séries Cultes
-        creerFilm("Le journal de Jennifa", "Comédie", 2022, "BASIC", "Les mésaventures délirantes d'une jeune fille pleine d'ambition.", "/images/Le journal de Jennifa.png");
+        creerFilm("Le journal de Jennifa", "Comédie", 2022, "BASIC", "Les mésaventures délirantes d'une jeune fille pleine d'ambition.", "/images/JournalJennifa.png");
         creerFilm("Pakgne", "Comédie", 2020, "BASIC", "Retrouvez les commérages et les sketchs cultes du duo incontournable.", "/images/Pakgne.png");
         creerFilm("L'accord", "Drame", 2022, "STANDARD", "Quand les secrets de famille et les pactes silencieux refont surface.", "/images/L'accord.png");
-        creerFilm("Maideut", "Comédie Dramatique", 2021, "BASIC", "Intrigues amoureuses et quiproquos au sein de la bourgeoisie locale.", "/images/Maideut.png");
-        creerFilm("The Plan", "Thriller", 2023, "PREMIUM", "Un braquage à haut risque où les trahisons s'enchaînent plus vite que prévu.", "/images/The plan.png");
+        creerFilm("Maideut", "Comédie Dramatique", 2021, "BASIC", "Intrigues amoureuses et quiproquos au sein de la bourgeoisie locale.", "/images/Malia.png");
+        creerFilm("The Plan", "Thriller", 2023, "PREMIUM", "Un braquage à haut risque où les trahisons s'enchaînent plus vite que prévu.", "/images/Theplan.png");
 
         // Catégorie 3 : Pour les plus jeunes
-        creerFilm("Aya de Yopougon", "Animation", 2013, "BASIC", "Chronique tendre et colorée de la vie à Abidjan à la fin des années 70.", "/images/Aya de Yopougon.png");
-        creerFilm("Black Panther", "Action / Fantastique", 2018, "PREMIUM", "Le roi T'Challa défend le Wakanda et son héritage face à une menace mondiale.", "/images/BlackPanther.png");
+        creerFilm("Aya de Yopougon", "Animation", 2013, "BASIC", "Chronique tendre et colorée de la vie à Abidjan à la fin des années 70.", "/images/aya.png");
+        creerFilm("Black Panther", "Action / Fantastique", 2018, "PREMIUM", "Le roi T'Challa défend le Wakanda et son héritage face à une menace mondiale.", "/images/.Blackpantherpng.png");
     }
 
     private void creerFilm(String titre, String genre, int annee, String abonnement, String description, String imageUri) {

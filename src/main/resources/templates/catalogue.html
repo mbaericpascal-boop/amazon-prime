@@ -5,28 +5,99 @@
     <title>CamStream - Catalogue</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
-        body { background-color: #141414; color: white; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow-x: hidden; }
-        .hero-banner { position: relative; background-size: cover; background-position: center; height: 65vh; display: flex; align-items: center; transition: background-image 0.5s ease-in-out; }
-        .banner-overlay { position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(77deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 85%); z-index: 1; }
+        :root {
+            --camstream-bg: #0b0f0c; 
+            --camstream-green: #00de6e; 
+            --camstream-powder: rgba(0, 222, 110, 0.15); 
+            --camstream-card-border: #1d3528;
+        }
+
+        body { 
+            background-color: var(--camstream-bg); 
+            color: white; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            overflow-x: hidden; 
+        }
+
+        /* Bannière principale avec reflet vert poudré */
+        .hero-banner { 
+            position: relative; 
+            background-size: cover; 
+            background-position: center; 
+            height: 65vh; 
+            display: flex; 
+            align-items: center; 
+            transition: background-image 0.5s ease-in-out; 
+        }
+
+        .banner-overlay { 
+            position: absolute; top:0; left:0; right:0; bottom:0; 
+            background: linear-gradient(77deg, rgba(11, 15, 12, 0.9) 0%, rgba(0,0,0,0) 85%),
+                        radial-gradient(circle at top right, var(--camstream-powder) 0%, transparent 60%); 
+            z-index: 1; 
+        }
+
         .banner-content { position: relative; z-index: 2; max-width: 600px; padding-left: 50px; }
+
+        /* Sliders de films */
         .film-slider { display: flex; overflow-x: auto; gap: 15px; padding: 15px 0; scroll-behavior: smooth; }
         .film-slider::-webkit-scrollbar { height: 6px; }
-        .film-slider::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        .film-card { min-width: 220px; max-width: 220px; cursor: pointer; transition: transform 0.3s ease; position: relative; }
-        .film-card:hover { transform: scale(1.08); z-index: 5; }
-        .film-card img { width: 100%; height: 125px; object-fit: cover; border-radius: 4px; border: 1px solid #292929; }
+        .film-slider::-webkit-scrollbar-thumb { background: var(--camstream-card-border); border-radius: 4px; }
+
+        /* Cartes de films style CamStream */
+        .film-card { min-width: 220px; max-width: 220px; cursor: pointer; transition: transform 0.3s ease, border-color 0.3s ease; position: relative; }
+        .film-card:hover { 
+            transform: scale(1.08); 
+            z-index: 5; 
+            border-color: var(--camstream-green) !important;
+            box-shadow: 0 0 15px var(--camstream-powder);
+        }
+        .film-card img { width: 100%; height: 125px; object-fit: cover; border-radius: 4px; border: 1px solid var(--camstream-card-border); }
+
         .badge-abo { position: absolute; top: 8px; right: 8px; font-size: 0.75rem; padding: 3px 6px; border-radius: 3px; font-weight: bold; }
+        
+        /* Boutons personnalisés */
+        .btn-camstream-primary { background-color: var(--camstream-green); color: #000000; font-weight: bold; }
+        .btn-camstream-primary:hover { background-color: #00b85c; color: #000000; box-shadow: 0 0 12px rgba(0, 222, 110, 0.5); }
+        
+        /* Barre de recherche prédictive */
+        .search-container { position: relative; max-width: 450px; margin: 0 auto; }
+        .search-input { 
+            width: 100%; padding: 10px 20px; border-radius: 25px; 
+            border: 1px solid var(--camstream-card-border); background-color: #111612; color: white;
+            transition: border-color 0.3s;
+        }
+        .search-input:focus { border-color: var(--camstream-green); outline: none; box-shadow: 0 0 8px var(--camstream-powder); }
+        
+        .suggestions-box { 
+            position: absolute; width: 100%; background: #121814; border: 1px solid var(--camstream-card-border);
+            border-radius: 8px; z-index: 1000; display: none; max-height: 250px; overflow-y: auto;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.7);
+        }
+        .suggestion-item { display: block; padding: 12px; color: white; text-decoration: none; border-bottom: 1px solid #1a231e; }
+        .suggestion-item:hover { background-color: rgba(0, 222, 110, 0.15); color: var(--camstream-green); }
     </style>
 </head>
 <body>
 
-    <div id="mainBanner" class="hero-banner" style="background-image: url('/images/Mboa.png');">
+    <div class="container-fluid px-5 pt-4 d-flex justify-content-between align-items-center">
+        <h3 class="fw-bold m-0" style="color: var(--camstream-green) !important;">CAMSTREAM</h3>
+        
+        <div class="search-container flex-grow-1 mx-4">
+            <input type="text" id="searchBar" class="search-input" placeholder="Rechercher un film ou une série...">
+            <div id="suggestions" class="suggestions-box"></div>
+        </div>
+        
+        <span class="text-light" th:text="${user != null ? user.prenom : 'Invité'}">Utilisateur</span>
+    </div>
+
+    <div id="mainBanner" class="hero-banner mt-3" style="background-image: url('/images/mboa-banner.jpg');">
         <div class="banner-overlay"></div>
         <div class="banner-content">
             <h1 id="bannerTitle" class="display-4 fw-bold">Mboa</h1>
             <p id="bannerDescription" class="lead text-light">Une histoire poignante sur la vie à Douala, entre tradition et modernité.</p>
             <div class="mt-4">
-                <button class="btn btn-light btn-lg me-2 px-4 fw-bold" onclick="alert('Lecture du trailer bientôt disponible.')">▶ Lecture</button>
+                <a id="bannerLink" href="/film/1" class="btn btn-camstream-primary btn-lg me-2 px-4">▶ Lecture</a>
                 <button class="btn btn-secondary btn-lg px-4" onclick="alert('Ajouté à ma liste')">Plus d'infos</button>
             </div>
         </div>
@@ -34,84 +105,81 @@
 
     <div class="container-fluid px-5 mt-4">
         
-        <h5 class="text-white fw-bold mb-1">Films populaires au Cameroun</h5>
-        <div class="film-slider mb-4">
-            <div class="film-card" data-title="Mboa" data-desc="Une histoire poignante sur la vie à Douala, entre tradition et modernité." data-img="/images/Mboa.png" onclick="changerFilm(this)">
-                <img src="/images/Mboa.png" alt="Mboa">
-                <span class="badge-abo bg-success text-white">BASIC</span>
-            </div>
-            <div class="film-card" data-title="Bataille des chéries" data-desc="Intrigues, pouvoir et trahisons au cœur d'une rivalité amoureuse intense." data-img="/images/Bataille des chéries .png" onclick="changerFilm(this)">
-                <img src="/images/Bataille des chéries .png" alt="Bataille des chéries">
-                <span class="badge-abo bg-warning text-dark">STANDARD</span>
-            </div>
-            <div class="film-card" data-title="La patrie d'abord" data-desc="Un hommage plein d'action aux forces de défense engagées pour la paix." data-img="/images/La patrie d'abord.png" onclick="changerFilm(this)">
-                <img src="/images/La patrie d'abord.png" alt="La patrie d'abord">
-                <span class="badge-abo bg-warning text-dark">STANDARD</span>
-            </div>
-            <div class="film-card" data-title="Le Retour au Village" data-desc="Un jeune diplômé quitte la ville pour redécouvrir ses racines de manière hilarante." data-img="/images/Le Retour au Village.png" onclick="changerFilm(this)">
-                <img src="/images/Le Retour au Village.png" alt="Le Retour au Village">
-                <span class="badge-abo bg-success text-white">BASIC</span>
-            </div>
-            <div class="film-card" data-title="Le Juste" data-desc="Un homme intègre se dresse seul contre la corruption dans son quartier." data-img="/images/Le juste.png" onclick="changerFilm(this)">
-                <img src="/images/Le juste.png" alt="Le Juste">
-                <span class="badge-abo bg-danger text-white">PREMIUM</span>
-            </div>
-            <div class="film-card" data-title="Waka" data-desc="Le parcours courageux d'une femme bien décidée à s'en sortir face aux épreuves." data-img="/images/Waka.png" onclick="changerFilm(this)">
-                <img src="/images/Waka.png" alt="Waka">
-                <span class="badge-abo bg-success text-white">BASIC</span>
-            </div>
-        </div>
-
-        <h5 class="text-white fw-bold mb-1">Séries Cultes</h5>
-        <div class="film-slider mb-4">
-            <div class="film-card" data-title="Le journal de Jennifa" data-desc="Les mésaventures délirantes d'une jeune fille pleine d'ambition." data-img="/images/Le journal de Jennifa.png" onclick="changerFilm(this)">
-                <img src="/images/Le journal de Jennifa.png" alt="Le journal de Jennifa">
-                <span class="badge-abo bg-success text-white">BASIC</span>
-            </div>
-            <div class="film-card" data-title="Pakgne" data-desc="Retrouvez les commérages et les sketchs cultes du duo incontournable." data-img="/images/Pakgne.png" onclick="changerFilm(this)">
-                <img src="/images/Pakgne.png" alt="Pakgne">
-                <span class="badge-abo bg-success text-white">BASIC</span>
-            </div>
-            <div class="film-card" data-title="L'accord" data-desc="Quand les secrets de famille et les pactes silencieux refont surface." data-img="/images/L'accord.png" onclick="changerFilm(this)">
-                <img src="/images/L'accord.png" alt="L'accord">
-                <span class="badge-abo bg-warning text-dark">STANDARD</span>
-            </div>
-            <div class="film-card" data-title="Maideut" data-desc="Intrigues amoureuses et quiproquos au sein de la bourgeoisie locale." data-img="/images/Maideut.png" onclick="changerFilm(this)">
-                <img src="/images/Maideut.png" alt="Maideut">
-                <span class="badge-abo bg-success text-white">BASIC</span>
-            </div>
-            <div class="film-card" data-title="The Plan" data-desc="Un braquage à haut risque où les trahisons s'enchaînent plus vite que prévu." data-img="/images/The plan.png" onclick="changerFilm(this)">
-                <img src="/images/The plan.png" alt="The Plan">
-                <span class="badge-abo bg-danger text-white">PREMIUM</span>
-            </div>
-        </div>
-
-        <h5 class="text-white fw-bold mb-1">Pour les plus jeunes</h5>
+        <h5 class="fw-bold mb-1" style="color: #e2e2e2;">Tout le catalogue</h5>
         <div class="film-slider mb-5">
-            <div class="film-card" data-title="Aya de Yopougon" data-desc="Chronique tendre et colorée de la vie à Abidjan à la fin des années 70." data-img="/images/Aya de Yopougon.png" onclick="changerFilm(this)">
-                <img src="/images/Aya de Yopougon.png" alt="Aya de Yopougon">
-                <span class="badge-abo bg-success text-white">BASIC</span>
+            <div th:each="film : ${films}" class="film-card" 
+                 th:data-id="${film.id}"
+                 th:data-title="${film.titre}" 
+                 th:data-desc="${film.description}" 
+                 th:data-img="${film.imageUri}" 
+                 th:data-banner="${film.afficheBanniere != null ? film.afficheBanniere : film.imageUri}"
+                 onclick="changerFilm(this)">
+                
+                <img th:src="${film?.imageUri}" th:alt="${film?.titre}">
+                
+                <span th:if="${film.abonnementRequis == 'BASIC'}" class="badge-abo bg-success text-white">BASIC</span>
+                <span th:if="${film.abonnementRequis == 'STANDARD'}" class="badge-abo bg-warning text-dark">STANDARD</span>
+                <span th:if="${film.abonnementRequis == 'PREMIUM'}" class="badge-abo bg-danger text-white">PREMIUM</span>
             </div>
-            <div class="film-card" data-title="Black Panther" data-desc="Le roi T'Challa défend le Wakanda et son héritage face à une menace mondiale." data-img="/images/BlackPanther.png" onclick="changerFilm(this)">
-                <img src="/images/BlackPanther.png" alt="Black Panther">
-                <span class="badge-abo bg-danger text-white">PREMIUM</span>
+            
+            <div th:if="${#lists.isEmpty(films)}" class="text-muted ps-2">
+                Aucun média disponible pour le moment.
             </div>
         </div>
-
     </div>
 
     <script>
+        // Changement dynamique du contenu de la bannière lors du clic sur un film
         function changerFilm(element) {
+            const id = element.getAttribute('data-id');
             const titre = element.getAttribute('data-title');
             const description = element.getAttribute('data-desc');
-            const image = element.getAttribute('data-img');
+            const banniere = element.getAttribute('data-banner');
 
             document.getElementById('bannerTitle').innerText = titre;
             document.getElementById('bannerDescription').innerText = description;
-            document.getElementById('mainBanner').style.backgroundImage = "url('" + image + "')";
+            document.getElementById('mainBanner').style.backgroundImage = "url('" + banniere + "')";
+            document.getElementById('bannerLink').setAttribute('href', '/film/' + id);
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // Requêtes asynchrones vers l'API de recherche
+        document.getElementById('searchBar').addEventListener('input', function() {
+            let query = this.value;
+            let suggestionsBox = document.getElementById('suggestions');
+            
+            if (query.trim().length < 2) {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+            
+            fetch(`/api/films/search?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(films => {
+                    suggestionsBox.innerHTML = '';
+                    if (films.length > 0) {
+                        suggestionsBox.style.display = 'block';
+                        films.forEach(film => {
+                            let a = document.createElement('a');
+                            a.href = `/film/${film.id}`;
+                            a.className = 'suggestion-item';
+                            a.innerHTML = `<strong>${film.titre}</strong> <span class="text-muted" style="font-size:0.8rem; float:right;">${film.genre}</span>`;
+                            suggestionsBox.appendChild(a);
+                        });
+                    } else {
+                        suggestionsBox.style.display = 'none';
+                    }
+                })
+                .catch(err => console.error("Erreur de recherche asynchrone : ", err));
+        });
+
+        // Masquer les suggestions au clic extérieur
+        document.addEventListener('click', function(e) {
+            if (e.target.id !== 'searchBar') {
+                document.getElementById('suggestions').style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>

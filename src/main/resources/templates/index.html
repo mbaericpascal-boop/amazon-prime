@@ -54,6 +54,20 @@
         .logo span { color: var(--vert); }
         .logo em { color: var(--rouge); font-style: normal; }
         .nav-btns { display: flex; gap: 1rem; align-items: center; }
+        
+        .lang-select {
+            background: rgba(17, 17, 17, 0.8);
+            color: var(--texte);
+            border: 1px solid #444;
+            padding: 0.55rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .lang-select:hover { border-color: var(--vert); }
+
         .btn {
             padding: 0.55rem 1.4rem;
             border-radius: 6px;
@@ -71,30 +85,61 @@
             background: transparent;
         }
         .btn-outline:hover { border-color: var(--vert); color: var(--vert); }
-        .btn-green {
-            background: var(--vert);
-            color: white;
-        }
-        .btn-green:hover { background: #00c060; transform: translateY(-1px); }
 
-        /* ===== HERO ===== */
+        /* ===== HERO AVEC LE MUR D'IMAGES ANIMÉ ===== */
         .hero {
-            min-height: 92vh;
+            min-height: 75vh;
             display: flex;
             align-items: center;
             padding: 4rem 5%;
             position: relative;
             overflow: hidden;
         }
+        
+        .hero-wall-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            opacity: 0.15;
+            transform: scale(1.1) rotate(-3deg);
+        }
+        
+        .wall-row {
+            display: flex;
+            gap: 15px;
+            width: max-content;
+        }
+        .row-to-left { animation: moveLeft 45s linear infinite; }
+        .row-to-right { animation: moveRight 45s linear infinite; }
+
+        .wall-row img {
+            width: 220px;
+            height: 125px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        @keyframes moveLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes moveRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
         .hero-bg {
             position: absolute;
             inset: 0;
+            z-index: 2;
             background:
-                radial-gradient(ellipse 60% 80% at 70% 50%, rgba(0,166,81,0.08) 0%, transparent 60%),
-                radial-gradient(ellipse 40% 60% at 30% 80%, rgba(206,17,38,0.06) 0%, transparent 50%),
-                radial-gradient(ellipse 50% 50% at 80% 10%, rgba(252,209,22,0.05) 0%, transparent 50%);
+                radial-gradient(ellipse 60% 80% at 70% 50%, rgba(0,166,81,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 60% at 30% 80%, rgba(206,17,38,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 80% 10%, rgba(252,209,22,0.07) 0%, transparent 50%);
         }
-        /* grille de fond subtile */
         .hero-bg::after {
             content: '';
             position: absolute;
@@ -104,11 +149,15 @@
                 linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
             background-size: 60px 60px;
         }
+        
         .hero-content {
             position: relative;
-            z-index: 2;
-            max-width: 650px;
+            z-index: 3;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
         }
+
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -127,26 +176,28 @@
         }
         .hero h1 {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            font-size: clamp(3.5rem, 7vw, 5.5rem);
             line-height: 0.95;
             letter-spacing: 2px;
             margin-bottom: 1.5rem;
             animation: fadeUp 0.6s 0.1s ease both;
         }
-        .hero h1 .line-vert  { color: var(--vert); display: block; }
-        .hero h1 .line-blanc { color: var(--texte); display: block; }
-        .hero h1 .line-rouge { color: var(--rouge); display: block; }
+        .hero h1 span { display: inline-block; margin: 0 10px; }
+        .hero h1 .line-vert  { color: var(--vert); }
+        .hero h1 .line-blanc { color: var(--texte); }
+        .hero h1 .line-rouge { color: var(--rouge); }
+        
         .hero-desc {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #aaa;
             line-height: 1.7;
             margin-bottom: 2rem;
-            max-width: 500px;
             animation: fadeUp 0.6s 0.2s ease both;
         }
         .hero-cta {
             display: flex;
             gap: 1rem;
+            justify-content: center;
             flex-wrap: wrap;
             animation: fadeUp 0.6s 0.3s ease both;
         }
@@ -161,61 +212,16 @@
             cursor: pointer;
             font-family: 'Outfit', sans-serif;
         }
-        .btn-hero-primary {
-            background: var(--vert);
-            color: white;
-        }
+        .btn-hero-primary { background: var(--vert); color: white; }
         .btn-hero-primary:hover { background: #00c060; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,166,81,0.3); }
-        .btn-hero-secondary {
-            background: transparent;
-            color: var(--texte);
-            border: 1.5px solid #333;
-        }
+        .btn-hero-secondary { background: transparent; color: var(--texte); border: 1.5px solid #333; }
         .btn-hero-secondary:hover { border-color: #fff; transform: translateY(-2px); }
-
-        /* films flottants côté droit */
-        .hero-films {
-            position: absolute;
-            right: 5%;
-            top: 50%;
-            transform: translateY(-50%);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            z-index: 2;
-            animation: fadeLeft 0.8s 0.4s ease both;
-        }
-        @media (max-width: 900px) { .hero-films { display: none; } }
-        .mini-card {
-            width: 140px;
-            background: #161616;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid #222;
-            transition: transform 0.2s;
-        }
-        .mini-card:hover { transform: scale(1.04); }
-        .mini-card:nth-child(2) { margin-top: 2rem; }
-        .mini-card:nth-child(4) { margin-top: -2rem; }
-        .mini-poster {
-            height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-        }
-        .mini-info { padding: 0.6rem; }
-        .mini-title { font-size: 0.75rem; font-weight: 600; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .mini-badge { font-size: 0.65rem; padding: 0.1rem 0.4rem; border-radius: 3px; display: inline-block; }
-        .badge-basic    { background: rgba(0,166,81,0.2);  color: var(--vert); }
-        .badge-standard { background: rgba(0,102,204,0.2); color: #4da6ff; }
-        .badge-premium  { background: rgba(252,209,22,0.2);color: var(--jaune); }
 
         /* ===== STATS ===== */
         .stats {
             display: flex;
             gap: 3rem;
-            padding: 2rem 5%;
+            padding: 2.5rem 5%;
             background: #0e0e0e;
             border-top: 1px solid #1a1a1a;
             border-bottom: 1px solid #1a1a1a;
@@ -231,6 +237,58 @@
         }
         .stat-label { font-size: 0.8rem; color: var(--subtil); text-transform: uppercase; letter-spacing: 1px; }
 
+        /* ===== SECTION TENDANCES (STYLE NETFLIX TOP 3) ===== */
+        .trends-container {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .trend-card {
+            position: relative;
+            width: 240px;
+            height: 340px;
+            display: flex;
+            align-items: flex-end;
+        }
+        .trend-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14rem;
+            line-height: 0.75;
+            position: absolute;
+            left: -45px;
+            bottom: -15px;
+            z-index: 1;
+            color: var(--noir);
+            -webkit-text-stroke: 4px #555;
+            transition: -webkit-text-stroke 0.3s;
+            user-select: none;
+        }
+        .trend-card:hover .trend-number {
+            -webkit-text-stroke: 4px var(--vert);
+        }
+        .trend-img-wrapper {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            border: 1px solid #222;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .trend-card:hover .trend-img-wrapper {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--vert);
+        }
+        .trend-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         /* ===== OFFRES ===== */
         .section { padding: 5rem 5%; }
         .section-title {
@@ -238,15 +296,17 @@
             font-size: 3rem;
             letter-spacing: 2px;
             margin-bottom: 0.5rem;
+            text-align: center;
         }
         .section-title span { color: var(--vert); }
-        .section-sub { color: var(--subtil); margin-bottom: 3rem; font-size: 1rem; }
+        .section-sub { color: var(--subtil); margin-bottom: 3rem; font-size: 1rem; text-align: center; }
 
         .offres-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.5rem;
-            max-width: 900px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
         .offre-card {
             background: #111;
@@ -312,6 +372,54 @@
         .offre-btn-outline { border: 1.5px solid #333; color: var(--texte); }
         .offre-btn-outline:hover { border-color: var(--vert); color: var(--vert); }
 
+        /* ===== FAQ ACCORDÉON (STYLE MODERNE) ===== */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto 5rem;
+            padding: 0 5%;
+        }
+        .faq-item {
+            background: #111;
+            border: 1px solid #222;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background 0.2s;
+        }
+        .faq-question:hover {
+            background: #161616;
+        }
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            color: var(--vert);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: #aaa;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            padding: 0 1.5rem;
+        }
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
         /* ===== GENRES ===== */
         .genres { padding: 0 5% 5rem; }
         .genres-grid {
@@ -347,14 +455,9 @@
         footer .logo { font-size: 1.5rem; }
         footer p { color: var(--subtil); font-size: 0.85rem; }
 
-        /* ===== ANIMATIONS ===== */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(24px); }
             to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeLeft {
-            from { opacity: 0; transform: translateY(-50%) translateX(30px); }
-            to   { opacity: 1; transform: translateY(-50%) translateX(0); }
         }
     </style>
 </head>
@@ -362,82 +465,66 @@
 
 <div class="flag-bar"></div>
 
-<!-- NAVBAR -->
 <nav>
     <a class="logo" href="#"><span>Cam</span><em>Stream</em></a>
     <div class="nav-btns">
-        <a href="/login"    class="btn btn-outline">Se connecter</a>
-        <a href="/register" class="btn btn-green">Commencer</a>
+        <select class="lang-select" onchange="location = this.value;">
+            <option value="?lang=fr" th:selected="${#locale.language == 'fr'}">Français</option>
+            <option value="?lang=en" th:selected="${#locale.language == 'en'}">English</option>
+        </select>
+        <a href="/login" class="btn btn-outline" th:text="#{nav.login}">Se connecter</a>
     </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
+    <div class="hero-wall-bg">
+        <div class="wall-row row-to-left">
+            <img src="/images/mboa-banner.jpg"><img src="/images/Batailledeschéries .png"><img src="/images/Lapatried'abord.png"><img src="/images/waka.png"><img src="/images/Beautésauvage.png">
+            <img src="/images/mboa-banner.jpg"><img src="/images/Batailledeschéries .png"><img src="/images/Lapatried'abord.png"><img src="/images/waka.png"><img src="/images/Beautésauvage.png">
+        </div>
+        <div class="wall-row row-to-right">
+            <img src="/images/JournalJennifa.png"><img src="/images/Pakgne.png"><img src="/images/L'accord.png"><img src="/images/Malia.png"><img src="/images/Theplan.png">
+            <img src="/images/JournalJennifa.png"><img src="/images/Pakgne.png"><img src="/images/L'accord.png"><img src="/images/Malia.png"><img src="/images/Theplan.png">
+        </div>
+        <div class="wall-row row-to-left">
+            <img src="/images/aya.png"><img src="/images/.Blackpantherpng.png"><img src="/images/mboa-banner.jpg"><img src="/images/waka.png"><img src="/images/Theplan.png">
+            <img src="/images/aya.png"><img src="/images/.Blackpantherpng.png"><img src="/images/mboa-banner.jpg"><img src="/images/waka.png"><img src="/images/Theplan.png">
+        </div>
+    </div>
+
     <div class="hero-bg"></div>
+    
     <div class="hero-content">
-        <div class="hero-badge">🇨🇲 Plateforme 100% Camerounaise</div>
+        <div class="hero-badge" th:text="#{hero.badge}">🇨🇲 Plateforme 100% Camerounaise</div>
         <h1>
-            <span class="line-vert">Films.</span>
-            <span class="line-blanc">Séries.</span>
-            <span class="line-rouge">Culture.</span>
+            <span class="line-vert" th:text="#{hero.title.movies}">Films.</span>
+            <span class="line-blanc" th:text="#{hero.title.series}">Séries.</span>
+            <span class="line-rouge" th:text="#{hero.title.culture}">Culture.</span>
         </h1>
-        <p class="hero-desc">
+        <p class="hero-desc" th:utext="#{hero.desc}">
             Découvrez le meilleur du cinéma africain et mondial. 
             Des abonnements à partir de <strong style="color:var(--vert)">2 000 FCFA/mois</strong>, 
             sans engagement.
         </p>
         <div class="hero-cta">
-            <a href="/register" class="btn-hero btn-hero-primary">🚀 Démarrer gratuitement</a>
-            <a href="/login"    class="btn-hero btn-hero-secondary">Se connecter</a>
-        </div>
-    </div>
-
-    <!-- Mini cards films -->
-    <div class="hero-films">
-        <div class="mini-card">
-            <div class="mini-poster" style="background:linear-gradient(135deg,#1a2a1a,#0d1f0d);">🌍</div>
-            <div class="mini-info">
-                <div class="mini-title">Mboa</div>
-                <span class="mini-badge badge-basic">BASIC</span>
-            </div>
-        </div>
-        <div class="mini-card">
-            <div class="mini-poster" style="background:linear-gradient(135deg,#1a1a2a,#0d0d1f);">⚔️</div>
-            <div class="mini-info">
-                <div class="mini-title">Black Panther</div>
-                <span class="mini-badge badge-standard">STANDARD</span>
-            </div>
-        </div>
-        <div class="mini-card">
-            <div class="mini-poster" style="background:linear-gradient(135deg,#2a1a1a,#1f0d0d);">👑</div>
-            <div class="mini-info">
-                <div class="mini-title">Wakanda Forever</div>
-                <span class="mini-badge badge-premium">PREMIUM</span>
-            </div>
-        </div>
-        <div class="mini-card">
-            <div class="mini-poster" style="background:linear-gradient(135deg,#1a2a2a,#0d1f1f);">🌊</div>
-            <div class="mini-info">
-                <div class="mini-title">La Pirogue</div>
-                <span class="mini-badge badge-basic">BASIC</span>
-            </div>
+            <a href="/register" class="btn-hero btn-hero-primary" th:text="#{hero.btn.start}">Commencer ></a>
+            <a href="/login"    class="btn-hero btn-hero-secondary" th:text="#{nav.login}">Se connecter</a>
         </div>
     </div>
 </section>
 
-<!-- STATS -->
 <div class="stats">
     <div class="stat">
-        <div class="stat-num">8+</div>
-        <div class="stat-label">Films disponibles</div>
+        <div class="stat-num">13+</div>
+        <div class="stat-label" th:text="#{stats.movies}">Films disponibles</div>
     </div>
     <div class="stat">
         <div class="stat-num">3</div>
-        <div class="stat-label">Formules d'abonnement</div>
+        <div class="stat-label" th:text="#{stats.plans}">Formules d'abonnement</div>
     </div>
     <div class="stat">
         <div class="stat-num">2 000</div>
-        <div class="stat-label">FCFA / mois dès</div>
+        <div class="stat-label" th:text="#{stats.price}">FCFA / mois dès</div>
     </div>
     <div class="stat">
         <div class="stat-num">🇨🇲</div>
@@ -445,13 +532,37 @@
     </div>
 </div>
 
-<!-- OFFRES -->
+<section class="section" style="padding-bottom: 2rem;">
+    <h2 class="section-title">Tendances Actuelles</h2>
+    <p class="section-sub">Le top des contenus les plus regardés cette semaine au Cameroun</p>
+    
+    <div class="trends-container">
+        <div class="trend-card">
+            <div class="trend-number">1</div>
+            <div class="trend-img-wrapper">
+                <img src="/images/Ewusu.png" alt="Ewusu">
+            </div>
+        </div>
+        <div class="trend-card">
+            <div class="trend-number">2</div>
+            <div class="trend-img-wrapper">
+                <img src="/images/Mboamatanda.png" alt="Mboa Matanda">
+            </div>
+        </div>
+        <div class="trend-card">
+            <div class="trend-number">3</div>
+            <div class="trend-img-wrapper">
+                <img src="/images/MadameMonsieur.png" alt="Madame Monsieur">
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="section">
-    <h2 class="section-title">Nos <span>Offres</span></h2>
-    <p class="section-sub">Choisissez la formule qui vous convient, sans engagement</p>
+    <h2 class="section-title"><span th:text="#{offres.title.part1}">Nos</span> <span th:text="#{offres.title.part2}">Offres</span></h2>
+    <p class="section-sub" th:text="#{offres.subtitle}">Choisissez la formule qui vous convient, sans engagement</p>
 
     <div class="offres-grid">
-        <!-- BASIC -->
         <div class="offre-card">
             <div class="offre-icon">🟢</div>
             <div class="offre-nom">Basic</div>
@@ -468,7 +579,6 @@
             <a href="/register" class="offre-btn offre-btn-outline">Choisir Basic</a>
         </div>
 
-        <!-- STANDARD -->
         <div class="offre-card populaire">
             <div class="pop-badge">⭐ Populaire</div>
             <div class="offre-icon">🔵</div>
@@ -486,7 +596,6 @@
             <a href="/register" class="offre-btn offre-btn-green">Choisir Standard</a>
         </div>
 
-        <!-- PREMIUM -->
         <div class="offre-card">
             <div class="offre-icon">🟡</div>
             <div class="offre-nom">Premium</div>
@@ -505,10 +614,54 @@
     </div>
 </section>
 
-<!-- GENRES -->
+<section class="faq-section">
+    <h2 class="section-title">Foire Aux Questions</h2>
+    <p class="section-sub">Tout ce que vous devez savoir pour commencer sur CamStream</p>
+    
+    <div class="faq-item">
+        <div class="faq-question">
+            <span>Qu'est-ce que CamStream ?</span>
+            <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+            CamStream est une plateforme de streaming 100% camerounaise qui vous donne accès à un vaste catalogue de films, séries, courts-métrages et documentaires locaux et internationaux, directement sur vos écrans.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            <span>Quels sont les modes de paiement disponibles ?</span>
+            <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+            Pour faciliter l'accès au pays, nous intégrons les paiements locaux mobiles les plus populaires : <strong>Orange Money</strong>, <strong>MTN MoMo</strong>, ainsi que les cartes bancaires classiques et PayPal.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            <span>Puis-je annuler mon abonnement à tout moment ?</span>
+            <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+            Oui, absolument. Toutes nos offres sont totalement libres et sans aucun engagement. Vous pouvez stopper ou changer de forfait en un clic depuis votre espace profil, sans frais cachés.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            <span>Sur quels appareils puis-je regarder CamStream ?</span>
+            <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+            Vous pouvez vous connecter via votre ordinateur portable, votre tablette ou votre smartphone. Le nombre d'écrans utilisables en simultané dépend de la formule choisie (Basic, Standard ou Premium).
+        </div>
+    </div>
+</section>
+
 <section class="genres">
-    <h2 class="section-title">Explorer par <span>Genre</span></h2>
-    <p class="section-sub">Du cinéma africain aux blockbusters internationaux</p>
+    <h2 class="section-title"><span th:text="#{genres.title.part1}">Explorer par</span> <span th:text="#{genres.title.part2}">Genre</span></h2>
+    <p class="section-sub" th:text="#{genres.subtitle}">Du cinéma africain aux blockbusters internationaux</p>
     <div class="genres-grid">
         <a href="/login" class="genre-pill"><span class="genre-icon">💥</span><span class="genre-nom">Action</span></a>
         <a href="/login" class="genre-pill"><span class="genre-icon">😂</span><span class="genre-nom">Comédie</span></a>
@@ -519,12 +672,34 @@
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
     <a class="logo" href="#"><span>Cam</span><em>Stream</em></a>
     <p>© 2026 CamStream — Projet KEYCE Informatique 🇨🇲</p>
     <p style="color:#333;">Yaoundé • Douala • Cameroun</p>
 </footer>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(item => {
+        item.addEventListener('click', () => {
+            const parent = item.parentElement;
+            const answer = parent.querySelector('.faq-answer');
+            
+            if (parent.classList.contains('active')) {
+                answer.style.maxHeight = null;
+                parent.classList.remove('active');
+            } else {
+                // Ferme les autres accordéons ouverts (optionnel, style clean)
+                document.querySelectorAll('.faq-item').forEach(child => {
+                    child.classList.remove('active');
+                    child.querySelector('.faq-answer').style.maxHeight = null;
+                });
+                
+                parent.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
