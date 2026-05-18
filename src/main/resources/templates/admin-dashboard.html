@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Console Administration - CamStream</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        body {
+            background-color: #0b0e0c;
+            color: #ecf0f1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+        .admin-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #1d3528;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .admin-header h2 {
+            color: #fff;
+            margin: 0;
+        }
+        .admin-header h2 span {
+            color: #00de6e;
+        }
+        .grid-sections {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        .admin-card {
+            background-color: #111612;
+            border: 1px solid #1d3528;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .admin-card h3 {
+            color: #00de6e;
+            margin-top: 0;
+            border-bottom: 1px solid #1d3528;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #0b0e0c;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #1d3528;
+        }
+        th {
+            background-color: #141f18;
+            color: #00de6e;
+        }
+        tr:hover {
+            background-color: #141f18;
+        }
+        .btn-action {
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .btn-delete {
+            background-color: #ff3333;
+            color: white;
+        }
+        .btn-delete:hover {
+            background-color: #cc0000;
+        }
+        /* Formulaire d'ajout rapide */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #aaa;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            background-color: #0b0e0c;
+            border: 1px solid #1d3528;
+            border-radius: 4px;
+            color: white;
+            box-sizing: border-box;
+        }
+        .form-control:focus {
+            border-color: #00de6e;
+            outline: none;
+        }
+        .btn-submit {
+            background-color: #00de6e;
+            color: #0b0e0c;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background-color: #00b358;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" th:href="@{/admin/dashboard}">Cam<span>Stream</span> <small style="font-size:0.5em; color:#aaa;">[ADMIN]</small></a>
+    <div class="navbar-links">
+        <form th:action="@{/logout}" method="post" style="display:inline">
+            <button type="submit" class="btn-logout">Déconnexion Admin</button>
+        </form>
+    </div>
+</nav>
+
+<div class="admin-container">
+    <div class="admin-header">
+        <h2>Console de Gestion <span>CamStream</span></h2>
+        <p style="color: #666;">Connecté en tant qu'Administrateur</p>
+    </div>
+
+    <div class="grid-sections">
+        
+        <div class="admin-card">
+            <h3>🎬 Ajouter un Nouveau Film</h3>
+            <form th:action="@{/admin/film/ajouter}" th:object="${nouveauFilm}" method="post" style="margin-top: 15px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Titre du Film</label>
+                        <input type="text" th:field="*{titre}" class="form-control" required placeholder="Ex: Jennifa">
+                    </div>
+                    <div class="form-group">
+                        <label>Genre</label>
+                        <input type="text" th:field="*{genre}" class="form-control" required placeholder="Ex: Action, Drame...">
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Année de Sortie</label>
+                        <input type="number" th:field="*{annee}" class="form-control" required placeholder="2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Niveau d'Abonnement Requis</label>
+                        <select th:field="*{abonnementRequis}" class="form-control">
+                            <option value="BASIC">BASIC</option>
+                            <option value="STANDARD">STANDARD</option>
+                            <option value="PREMIUM">PREMIUM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>URL de la Vidéo (MP4)</label>
+                    <input type="text" th:field="*{trailerUrl}" class="form-control" placeholder="videos/nom_du_film.mp4">
+                </div>
+
+                <div class="form-group">
+                    <label>Chemin de la Miniature (Image)</label>
+                    <input type="text" th:field="*{imageUri}" class="form-control" placeholder="images/affiche.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea th:field="*{description}" class="form-control" rows="3" placeholder="Synopsis du film..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">💾 Enregistrer le Film</button>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <h3>🎬 Catalogue des Films Actuels</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titre</th>
+                        <th>Genre</th>
+                        <th>Année</th>
+                        <th>Accès Requis</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="film : ${films}">
+                        <td th:text="${film.id}">1</td>
+                        <td th:text="${film.titre}" style="font-weight: bold; color: #fff;">Titre</td>
+                        <td th:text="${film.genre}">Genre</td>
+                        <td th:text="${film.annee}">2026</td>
+                        <td>
+                            <span th:text="${film.abonnementRequis}" class="badge">BASIC</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/film/supprimer/{id}(id=${film.id})}" 
+                               class="btn-action btn-delete" 
+                               onclick="return confirm('Supprimer définitivement ce film ?');">Retirer</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="admin-card">
+            <h3>👥 Comptes Utilisateurs</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email / Nom d'utilisateur</th>
+                        <th>Type Abonnement</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="u : ${users}">
+                        <td th:text="${u.id}">1</td>
+                        <td th:text="${u.email}" style="color: #00de6e;">email@domain.com</td>
+                        <td th:text="${u.typeAbonnement != null ? u.typeAbonnement : 'BASIC'}">STANDARD</td>
+                        <td>
+                            <a th:href="@{/admin/user/supprimer/{id}(id=${u.id})}" 
+                               class="btn-action btn-delete" 
+                               onclick="return confirm('Supprimer ce compte utilisateur ?');">Bannir</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

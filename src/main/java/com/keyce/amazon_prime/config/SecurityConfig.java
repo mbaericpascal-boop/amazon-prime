@@ -40,7 +40,7 @@ public class SecurityConfig {
                 // Pages publiques, ressources statiques et parcours de paiement autorisés sans session
                 .requestMatchers("/", "/login", "/register", "/payment/**", "/css/**", "/js/**", "/images/**", "/videos/**", "/video/**").permitAll()
 
-                // Pages réservées à l'administration
+                // Pages réservées à l'administration (Protégées par le rôle ADMIN)
                 .requestMatchers("/admin/**").hasRole("ADMIN")
 
                 // Tout le reste (Le catalogue, les profils...) nécessite une connexion active et validée
@@ -51,7 +51,22 @@ public class SecurityConfig {
                 .loginProcessingUrl("/login")    
                 .usernameParameter("email")      
                 .passwordParameter("motDePasse")
-                .defaultSuccessUrl("/catalogue", true)  
+                
+                // GESTION DE LA REDIRECTION DYNAMIQUE SELON LE RÔLE
+                .successHandler((request, response, authentication) -> {
+                    var authorities = authentication.getAuthorities();
+                    
+                    // On vérifie si l'utilisateur possède l'autorité 'ROLE_ADMIN'
+                    boolean isAdmin = authorities.stream()
+                            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+                    
+                    if (isAdmin) {
+                        response.sendRedirect("/admin/dashboard");
+                    } else {
+                        response.sendRedirect("/catalogue");
+                    }
+                })
+                
                 .failureUrl("/login?erreur=true")        
                 .permitAll()
             )
